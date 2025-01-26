@@ -1,0 +1,36 @@
+{
+  "name": "aws-management-console-colorize",
+  "description": "Chrome and Firefox extensions to change the header and footer colors of the AWS management console",
+  "private": true,
+  "version": "0.1.0",
+  "author": "Masaya Suzuki",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev:chrome": "wxt",
+    "dev:firefox": "wxt --mode development -b firefox",
+    "build:chrome": "bun run compile && wxt build",
+    "build:firefox": "bun run compile && wxt build -b firefox",
+    "build:firefox:dev": "bun run compile && wxt build --mode development -b firefox",
+    "zip:chrome": "bun run compile && wxt zip",
+    "zip:firefox": "bun run compile && wxt zip -b firefox",
+    "zip:firefox:dev": "bun run compile && wxt zip --mode development -b firefox",
+    "compile": "tsc --noEmit",
+    "postinstall": "wxt prepare"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-color-palette": "^7.3.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.280",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
+    "@wxt-dev/module-react": "^1.1.2",
+    "@wxt-dev/storage": "^1.0.1",
+    "typescript": "^5.6.3",
+    "wxt": "^0.19.13"
+  }
+}
