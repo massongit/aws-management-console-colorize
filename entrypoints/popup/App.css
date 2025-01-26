@@ -10,14 +10,14 @@
   padding: 2em;
 }
 
-.card > #sessionARNField {
+.card > #session-arn-field {
   gap: 10px;
   width: initial;
   padding-left: 10px;
   padding-right: 10px;
 }
 
-.card > #sessionARNField > .rcp-field-input {
+.card > #session-arn-field > .rcp-field-input {
   border-style: double;
 }
 

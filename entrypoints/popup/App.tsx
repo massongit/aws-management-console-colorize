@@ -277,9 +277,9 @@ function App() {
     <>
       <h1>AWS console colorize</h1>
       <div className="card rcp-fields-floor">
-        <div id="sessionARNField" className="rcp-field">
+        <div id="session-arn-field" className="rcp-field">
           <select
-            id="sessionARNIndex"
+            id="session-arn-index"
             className="rcp-field-input"
             value={index}
             onChange={async ({ target: { value } }) => {
@@ -308,7 +308,7 @@ function App() {
               onChange={({ target: { value } }) => setSessionARN(value)}
             />
           )}
-          <label htmlFor="sessionARNIndex" className="rcp-field-label">
+          <label htmlFor="session-arn-index" className="rcp-field-label">
             Session ARN
           </label>
         </div>
