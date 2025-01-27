@@ -1,0 +1,51 @@
+---
+name: build
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+permissions: read-all
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser_version:
+          - "chrome"
+          - "firefox"
+          - "firefox:dev"
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: oven-sh/setup-bun@v2.0.1
+        with:
+          bun-version-file: .bun-version
+      - run: bun install
+      - run: bun run zip:${{matrix.browser_version}}
+      - name: Get version
+        id: get-version
+        run: echo "version=$(yq -r '.version' package.json)" >> "$GITHUB_OUTPUT"
+      - name: Get escaped browser version
+        id: get-escaped-browser-version
+        run: echo "escaped-browser-version=$(echo ${{matrix.browser_version}} | sed -e 's/:/_/g')" >> "$GITHUB_OUTPUT"
+      - name: Upload ZIP output (For chrome)
+        uses: actions/upload-artifact@v4.6.0
+        if: matrix.browser_version == 'chrome'
+        with:
+          name: ${{steps.get-escaped-browser-version.outputs.escaped-browser-version}}
+          path: dist/aws-management-console-colorize-${{steps.get-version.outputs.version}}-chrome.zip
+      - name: Upload ZIP output (For Firefox)
+        uses: actions/upload-artifact@v4.6.0
+        if: matrix.browser_version == 'firefox' || matrix.browser_version == 'firefox:dev'
+        with:
+          name: ${{steps.get-escaped-browser-version.outputs.escaped-browser-version}}
+          path: dist/aws-management-console-colorize-${{steps.get-version.outputs.version}}-firefox.zip
+      - name: Upload ZIP output (Sources for Firefox)
+        uses: actions/upload-artifact@v4.6.0
+        if: matrix.browser_version == 'firefox' || matrix.browser_version == 'firefox:dev'
+        with:
+          name: ${{steps.get-escaped-browser-version.outputs.escaped-browser-version}}_sources
+          path: dist/aws-management-console-colorize-${{steps.get-version.outputs.version}}-sources.zip
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true

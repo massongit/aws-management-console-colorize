@@ -1,0 +1,12 @@
+{
+  "threshold": 0,
+  "reporters": ["consoleFull"],
+  "ignore": [
+    "**/__snapshots__/**",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/entrypoints/options/index.html",
+    "**/entrypoints/popup/index.html"
+  ],
+  "absolute": true
+}
