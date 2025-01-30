@@ -7,6 +7,11 @@ This is inspired by [gcp-console-colorize](https://github.com/yfuruyama/gcp-cons
 
 ![screenshot](screenshot.png)
 
+## Download
+
+* Chrome: <https://chromewebstore.google.com/detail/aws-management-console-co/ihllnndjleheembkonidbocncnnedhcf>
+* Firefox: <https://addons.mozilla.org/ja/firefox/addon/aws-console-colorize/>
+
 ## Development
 
 ### Settings
