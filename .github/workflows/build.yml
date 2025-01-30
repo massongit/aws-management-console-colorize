@@ -34,6 +34,15 @@ jobs:
         with:
           name: ${{steps.get-escaped-browser-version.outputs.escaped-browser-version}}
           path: dist/aws-management-console-colorize-${{steps.get-version.outputs.version}}-chrome.zip
+      - uses: mnao305/chrome-extension-upload@v5.0.0
+        if: matrix.browser_version == 'chrome'
+        with:
+          file-path: dist/aws-management-console-colorize-${{steps.get-version.outputs.version}}-chrome.zip
+          extension-id: ihllnndjleheembkonidbocncnnedhcf
+          client-id: ${{ secrets.CHROME_CLIENT_ID }}
+          client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          publish: false
       - name: Upload ZIP output (For Firefox)
         uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
         if: matrix.browser_version == 'firefox' || matrix.browser_version == 'firefox:dev'
