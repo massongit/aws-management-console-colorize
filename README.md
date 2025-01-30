@@ -9,8 +9,8 @@ This is inspired by [gcp-console-colorize](https://github.com/yfuruyama/gcp-cons
 
 ## Download
 
-* Chrome: <https://chromewebstore.google.com/detail/aws-management-console-co/ihllnndjleheembkonidbocncnnedhcf>
-* Firefox: <https://addons.mozilla.org/ja/firefox/addon/aws-console-colorize/>
+- Chrome: <https://chromewebstore.google.com/detail/aws-management-console-co/ihllnndjleheembkonidbocncnnedhcf>
+- Firefox: <https://addons.mozilla.org/ja/firefox/addon/aws-console-colorize/>
 
 ## Development
 
