@@ -1,0 +1,30 @@
+---
+name: update-gitleaks
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  update-gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: dev-hato/actions-update-gitleaks@091c34de599960bb32f05f5087bb2eb6ba875af8 # v0.0.84
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
