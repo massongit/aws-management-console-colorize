@@ -1,10 +1,140 @@
 import { z } from "zod";
-import { getColorSettingsFromStorage } from "@/modules/color_settings.ts";
-import { matches, MessageType } from "@/modules/lib.ts";
+import {
+  getColorSettingsFromStorage,
+  colorSettingZodType,
+} from "@/modules/color_settings.ts";
+import {
+  signinMatchPattern,
+  matches,
+  MessageType,
+  matchURL,
+} from "@/modules/lib.ts";
 
 type GetHTMLElementType = () => HTMLElement | null;
 
-function runChangeBackgroundColor(
+function changeColorElement(
+  colorElement: HTMLDivElement,
+  colorSetting: z.TypeOf<typeof colorSettingZodType>,
+  awsUIRestorePointerEvents: HTMLElement,
+) {
+  awsUIRestorePointerEvents.style.display = "flex";
+  awsUIRestorePointerEvents.style.justifyContent = "space-between";
+  colorElement.style.backgroundColor = colorSetting.hexColor;
+  colorElement.style.width = `${awsUIRestorePointerEvents.offsetHeight}px`;
+}
+
+async function runChangeSessionsSelectorColor(): Promise<boolean> {
+  const colorSettings = await getColorSettingsFromStorage();
+
+  if (colorSettings === null) {
+    return false;
+  }
+
+  const awsUIRestorePointerEventsList = document.querySelectorAll<HTMLElement>(
+    "div[class^='awsui_restore-pointer-events']",
+  );
+
+  if (awsUIRestorePointerEventsList.length === 0) {
+    return false;
+  }
+
+  for (const awsUIRestorePointerEvents of awsUIRestorePointerEventsList) {
+    const awsAccountTextContent = ["span", "a"]
+      .flatMap((t) => {
+        return Array.from(awsUIRestorePointerEvents.getElementsByTagName(t));
+      })
+      .map(({ textContent }) => textContent)
+      .find((textContent) => textContent !== null);
+
+    if (awsAccountTextContent === undefined) {
+      continue;
+    }
+
+    const sessionCardSessionCardUsername =
+      awsUIRestorePointerEvents.querySelector(
+        "p[class^='session-card_session_card_username']",
+      );
+
+    if (sessionCardSessionCardUsername === null) {
+      continue;
+    }
+
+    const colorSetting = colorSettings.find(({ sessionARN }) => {
+      const awsAccountID = awsAccountTextContent
+        .replaceAll("-", "")
+        .replace("(", "")
+        .replace(")", "");
+      return (
+        sessionARN.includes(`:${awsAccountID}:`) &&
+        sessionARN.endsWith(`/${sessionCardSessionCardUsername.textContent}`)
+      );
+    });
+    const colorElementClassName = "aws-console-colorize-color-element";
+    const colorElement = awsUIRestorePointerEvents
+      .getElementsByClassName(colorElementClassName)
+      .item(0);
+
+    if (colorElement instanceof HTMLDivElement) {
+      if (colorSetting === undefined) {
+        colorElement.remove();
+        continue;
+      }
+
+      changeColorElement(colorElement, colorSetting, awsUIRestorePointerEvents);
+      continue;
+    }
+
+    if (colorSetting === undefined) {
+      continue;
+    }
+
+    const newColorElement = document.createElement("div");
+    newColorElement.className = colorElementClassName;
+    changeColorElement(
+      newColorElement,
+      colorSetting,
+      awsUIRestorePointerEvents,
+    );
+    awsUIRestorePointerEvents.appendChild(newColorElement);
+  }
+
+  return true;
+}
+
+async function changeSessionsSelectorColor() {
+  if (await runChangeSessionsSelectorColor()) {
+    return;
+  }
+
+  const mutationObserveTargetID = "__next";
+  const mutationObserveTarget = document.getElementById(
+    mutationObserveTargetID,
+  );
+
+  if (mutationObserveTarget === null) {
+    throw new Error(`Can't get ${mutationObserveTargetID}`);
+  }
+
+  new MutationObserver(async (_, observer) => {
+    if (await runChangeSessionsSelectorColor()) {
+      observer.disconnect();
+    }
+  }).observe(mutationObserveTarget, { childList: true, subtree: true });
+}
+
+async function onSessionsSelectorMessage(message: MessageType) {
+  switch (message) {
+    case MessageType.getSessionARN:
+      return;
+    case MessageType.changeColor:
+      await changeSessionsSelectorColor();
+      return;
+    default:
+      throw new Error(`Incorrect message ${message}`);
+  }
+}
+
+function runChangeConsoleBackgroundColor(
   color: string,
   getElement: GetHTMLElementType,
 ): boolean {
@@ -18,7 +148,7 @@ function runChangeBackgroundColor(
   return true;
 }
 
-async function changeColor(sessionARN: string) {
+async function changeConsoleColor(sessionARN: string) {
   const colorSettings = await getColorSettingsFromStorage();
   const colorSetting = colorSettings?.find((c) => {
     return c.sessionARN === sessionARN;
@@ -43,7 +173,7 @@ async function changeColor(sessionARN: string) {
   ];
 
   for (const c of mutationObserverConfigs) {
-    if (runChangeBackgroundColor(hexColor, c.getElement)) {
+    if (runChangeConsoleBackgroundColor(hexColor, c.getElement)) {
       continue;
     }
 
@@ -56,14 +186,14 @@ async function changeColor(sessionARN: string) {
     }
 
     new MutationObserver((_, observer) => {
-      if (runChangeBackgroundColor(hexColor, c.getElement)) {
+      if (runChangeConsoleBackgroundColor(hexColor, c.getElement)) {
         observer.disconnect();
       }
     }).observe(mutationObserveTarget, { childList: true });
   }
 }
 
-async function onMessage(
+async function onConsoleMessage(
   sessionARN: string,
   message: MessageType,
 ): Promise<string | undefined> {
@@ -71,7 +201,7 @@ async function onMessage(
     case MessageType.getSessionARN:
       return sessionARN;
     case MessageType.changeColor:
-      await changeColor(sessionARN);
+      await changeConsoleColor(sessionARN);
       return;
     default:
       throw new Error(`Incorrect message ${message}`);
@@ -79,6 +209,22 @@ async function onMessage(
 }
 
 async function main() {
+  if (matchURL(signinMatchPattern, document.documentURI)) {
+    if (
+      !document.documentURI.includes(".signin.aws.amazon.com/sessions/selector")
+    ) {
+      return;
+    }
+
+    browser.runtime.onMessage.addListener(async (message) => {
+      return await onSessionsSelectorMessage(
+        MessageType[message as keyof typeof MessageType],
+      );
+    });
+    await changeSessionsSelectorColor();
+    return;
+  }
+
   const awscSessionData = document.querySelector(
     'meta[name="awsc-session-data"]',
   );
@@ -91,12 +237,12 @@ async function main() {
     .object({ sessionARN: z.string() })
     .parse(JSON.parse(awscSessionData.content)).sessionARN;
   browser.runtime.onMessage.addListener(async (message) => {
-    return await onMessage(
+    return await onConsoleMessage(
       sessionARN,
       MessageType[message as keyof typeof MessageType],
     );
   });
-  await changeColor(sessionARN);
+  await changeConsoleColor(sessionARN);
 }
 
 export default defineContentScript({ matches, main });
