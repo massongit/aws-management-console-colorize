@@ -1,2 +1,3 @@
 [install]
 saveTextLockfile = false
+exact = true
