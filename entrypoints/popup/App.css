@@ -8,6 +8,7 @@
 
 .card {
   padding: 2em;
+  grid-template-columns: initial;
 }
 
 .card > #session-arn-field {
