@@ -1,12 +1,11 @@
 import type { StorageItemKey } from "@wxt-dev/storage";
 import { z } from "zod";
 
-export const colorSettingsZodType = z.array(
-  z.object({
-    sessionARN: z.string(),
-    hexColor: z.string(),
-  }),
-);
+export const colorSettingZodType = z.object({
+  sessionARN: z.string(),
+  hexColor: z.string(),
+});
+export const colorSettingsZodType = z.array(colorSettingZodType);
 const nullableColorSettingsZodType = colorSettingsZodType.nullable();
 export const colorSettingsStorageItemKey: StorageItemKey = "sync:colorSettings";
 
