@@ -2,8 +2,9 @@
 
 Chrome and Firefox extensions to change and add colors in the AWS management console.  
 Those extensions offers the following features:
-* Change the header and footer colors of the AWS management console.
-* Add color blocks to the AWS session selection page.
+
+- Change the header and footer colors of the AWS management console.
+- Add color blocks to the AWS session selection page.
 
 These allow you to differentiate between multiple session ARNs.  
 These are inspired by [gcp-console-colorize](https://github.com/yfuruyama/gcp-console-colorize).
