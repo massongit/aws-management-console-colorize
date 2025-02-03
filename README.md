@@ -21,19 +21,21 @@ These are inspired by [gcp-console-colorize](https://github.com/yfuruyama/gcp-co
 
 ### `storage` justification
 
-Those extensions save the colors of the AWS management console and session selection page per session ARN to storage.
+Those extensions save the colors of the AWS pages per session ARN to storage.
 
 ### `tabs` justification
 
 The popup for those extensions sends messages to the content script running on the active tab to:
 
-- To get the session ARN used by the AWS management console and session selection page.
-- If you change the settings in the popup, the settings will be reflected in the AWS management console and session selection page.
+- To get the session ARN used by the AWS pages.
+- If you change the settings in the popup, the settings will be reflected in the AWS pages.
 
 ### Host permission justification
 
+<!-- textlint-disable ja-technical-writing/sentence-length -->
 The content script for those extensions is intended to work with the AWS management console and session selection page.  
 Therefore, the `content_scripts.matches` field is set to run only in the AWS management console and sign-in pages including session selection page.
+<!-- textlint-enable ja-technical-writing/sentence-length -->
 
 ## Development
 
