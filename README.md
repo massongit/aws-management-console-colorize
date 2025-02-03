@@ -1,7 +1,7 @@
 # AWS management console colorize
 
 Chrome and Firefox extensions to change and add colors in the AWS management console.  
-Those extensions offers the following features:
+Those extensions offer the following features:
 
 - Change the header and footer colors of the AWS management console.
 - Add color blocks to the AWS session selection page.
