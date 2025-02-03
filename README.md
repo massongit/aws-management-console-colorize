@@ -33,8 +33,10 @@ The popup for those extensions sends messages to the content script running on t
 ### Host permission justification
 
 <!-- textlint-disable ja-technical-writing/sentence-length -->
+
 The content script for those extensions is intended to work with the AWS management console and session selection page.  
 Therefore, the `content_scripts.matches` field is set to run only in the AWS management console and sign-in pages including session selection page.
+
 <!-- textlint-enable ja-technical-writing/sentence-length -->
 
 ## Development
