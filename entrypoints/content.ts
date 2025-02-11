@@ -3,7 +3,12 @@ import {
   getColorSettingsFromStorage,
   colorSettingZodType,
 } from "@/modules/color_settings.ts";
-import { signinMatchPattern, matches, MessageType } from "@/modules/lib.ts";
+import {
+  signinMatchPattern,
+  matches,
+  MessageType,
+  matchURL,
+} from "@/modules/lib.ts";
 
 type GetHTMLElementType = () => HTMLElement | null;
 
@@ -204,7 +209,7 @@ async function onConsoleMessage(
 }
 
 async function main() {
-  if (new MatchPattern(signinMatchPattern).includes(document.documentURI)) {
+  if (matchURL(signinMatchPattern, document.documentURI)) {
     if (
       !document.documentURI.includes(".signin.aws.amazon.com/sessions/selector")
     ) {

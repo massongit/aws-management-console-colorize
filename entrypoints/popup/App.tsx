@@ -7,7 +7,7 @@ import {
   colorSettingsZodType,
   getColorSettingsFromStorage,
 } from "@/modules/color_settings.ts";
-import { matches, MessageType } from "@/modules/lib.ts";
+import { matches, MessageType, matchURL } from "@/modules/lib.ts";
 import "react-color-palette/css";
 import "./App.css";
 
@@ -106,7 +106,7 @@ async function sendMessageToContentScript(
   }
 
   const filteredMatches = matches.filter((m) => {
-    return new MatchPattern(m).includes(z.string().parse(tabs[0].url));
+    return matchURL(m, z.string().parse(tabs[0].url));
   });
   return 0 < filteredMatches.length
     ? await browser.tabs.sendMessage(z.number().parse(tabs[0].id), message)

@@ -10,3 +10,7 @@ export const matches: Manifest.ContentScript["matches"] = [
   "*://*.console.aws.amazon.com/*",
   signinMatchPattern,
 ];
+
+export function matchURL(matchPattern: string, url: string): boolean {
+  return new RegExp(matchPattern.replaceAll("*", ".*")).exec(url) !== null;
+}
