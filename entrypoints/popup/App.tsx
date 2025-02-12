@@ -7,7 +7,7 @@ import {
   colorSettingsZodType,
   getColorSettingsFromStorage,
 } from "@/modules/color_settings.ts";
-import { matches, MessageType, matchURL } from "@/modules/lib.ts";
+import { getMatches, MessageType, matchURL } from "@/modules/lib.ts";
 import "react-color-palette/css";
 import "./App.css";
 
@@ -105,7 +105,7 @@ async function sendMessageToContentScript(
     throw new Error("Can't get tabs");
   }
 
-  const filteredMatches = matches.filter((m) => {
+  const filteredMatches = getMatches().filter((m) => {
     return matchURL(m, z.string().parse(tabs[0].url));
   });
   return 0 < filteredMatches.length
