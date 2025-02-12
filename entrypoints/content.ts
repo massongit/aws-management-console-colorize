@@ -19,6 +19,7 @@ function changeColorElement(
 ) {
   awsUIRestorePointerEvents.style.display = "flex";
   awsUIRestorePointerEvents.style.justifyContent = "space-between";
+  colorElement.title = `The color of ${colorSetting.sessionARN}`;
   colorElement.style.backgroundColor = colorSetting.hexColor;
   colorElement.style.width = `${awsUIRestorePointerEvents.offsetHeight}px`;
 }
