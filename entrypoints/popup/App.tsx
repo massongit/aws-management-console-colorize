@@ -301,6 +301,7 @@ function App() {
           {isIndexOfNewColorSetting && (
             <input
               className="rcp-field-input"
+              placeholder="arn:aws:iam::012345678901:user/user_name"
               required={true}
               value={sessionARN}
               onChange={({ target: { value } }) => setSessionARN(value)}
