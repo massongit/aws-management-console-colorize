@@ -5,7 +5,7 @@ import {
 } from "@/modules/color_settings.ts";
 import {
   signinMatchPattern,
-  matches,
+  getMatches,
   MessageType,
   matchURL,
 } from "@/modules/lib.ts";
@@ -21,7 +21,7 @@ function changeColorElement(
   awsUIRestorePointerEvents.style.justifyContent = "space-between";
   colorElement.title = `The color of ${colorSetting.sessionARN}`;
   colorElement.style.backgroundColor = colorSetting.hexColor;
-  colorElement.style.width = `${awsUIRestorePointerEvents.offsetHeight}px`;
+  colorElement.style.width = `${awsUIRestorePointerEvents.clientHeight}px`;
 }
 
 async function runChangeSessionsSelectorColor(): Promise<boolean> {
@@ -60,6 +60,13 @@ async function runChangeSessionsSelectorColor(): Promise<boolean> {
       continue;
     }
 
+    const sessionCardSessionCardUsernameText =
+      sessionCardSessionCardUsername.textContent;
+
+    if (sessionCardSessionCardUsernameText === null) {
+      continue;
+    }
+
     const colorSetting = colorSettings.find(({ sessionARN }) => {
       const awsAccountID = awsAccountTextContent
         .replaceAll("-", "")
@@ -67,7 +74,7 @@ async function runChangeSessionsSelectorColor(): Promise<boolean> {
         .replace(")", "");
       return (
         sessionARN.includes(`:${awsAccountID}:`) &&
-        sessionARN.endsWith(`/${sessionCardSessionCardUsername.textContent}`)
+        sessionARN.endsWith(`/${sessionCardSessionCardUsernameText.trim()}`)
       );
     });
     const colorElementClassName = "aws-console-colorize-color-element";
@@ -210,9 +217,19 @@ async function onConsoleMessage(
 }
 
 async function main() {
-  if (matchURL(signinMatchPattern, document.documentURI)) {
+  const isSessionsSelectorTestHTMLURL =
+    document.documentURI.startsWith("file://") &&
+    document.documentURI.endsWith("tests/e2e/html/sessions/selector.html");
+
+  if (
+    matchURL(signinMatchPattern, document.documentURI) ||
+    isSessionsSelectorTestHTMLURL
+  ) {
     if (
-      !document.documentURI.includes(".signin.aws.amazon.com/sessions/selector")
+      !document.documentURI.includes(
+        ".signin.aws.amazon.com/sessions/selector",
+      ) &&
+      !isSessionsSelectorTestHTMLURL
     ) {
       return;
     }
@@ -246,4 +263,4 @@ async function main() {
   await changeConsoleColor(sessionARN);
 }
 
-export default defineContentScript({ matches, main });
+export default defineContentScript({ matches: getMatches(), main });
