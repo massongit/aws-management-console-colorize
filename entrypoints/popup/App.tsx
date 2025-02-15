@@ -294,7 +294,9 @@ function App() {
             }}
           >
             {colorSettings.map(({ sessionARN }, i) => (
-              <option value={i}>{sessionARN}</option>
+              <option key={i} value={i}>
+                {sessionARN}
+              </option>
             ))}
             <option value={indexOfNewColorSetting}>[New]</option>
           </select>
