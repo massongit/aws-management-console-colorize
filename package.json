@@ -2,7 +2,7 @@
   "name": "aws-management-console-colorize",
   "description": "Chrome and Firefox extensions to change and add colors in the AWS management console.",
   "private": true,
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "Masaya Suzuki",
   "license": "MIT",
   "type": "module",
