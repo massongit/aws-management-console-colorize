@@ -37,7 +37,7 @@
     "@types/react-dom": "19.0.4",
     "@wxt-dev/module-react": "1.1.3",
     "@wxt-dev/storage": "1.1.0",
-    "prettier": "3.5.1",
+    "prettier": "3.5.2",
     "textlint": "14.4.2",
     "textlint-filter-rule-comments": "1.2.2",
     "textlint-rule-abbr-within-parentheses": "1.0.2",
