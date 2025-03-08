@@ -23,8 +23,8 @@ type addSessionARNParams = {
 export const extensionTest = test.extend<{
   context: BrowserContext;
 }>({
-  context: async ({}, use: (r: BrowserContext) => Promise<void>) => {
-    const context = await chromium.launchPersistentContext("", {
+  context: async ({ context }, use: (r: BrowserContext) => Promise<void>) => {
+    context = await chromium.launchPersistentContext("", {
       channel: "chromium",
       args: [`--disable-extensions-except=${path.resolve("dist/chrome-mv3")}`],
     });

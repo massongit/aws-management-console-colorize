@@ -1,3 +1,4 @@
+import React from "react";
 import type { Dispatch, SetStateAction } from "react";
 import type { SafeParseReturnType } from "zod";
 import { ColorPicker, ColorService, useColor } from "react-color-palette";

@@ -21,6 +21,9 @@
     "e2e": "bun run build:chrome:dev && playwright test",
     "postinstall": "wxt prepare"
   },
+  "engines": {
+    "node": "22.14.0"
+  },
   "dependencies": {
     "react": "^19.0.0",
     "react-color-palette": "^7.3.0",
