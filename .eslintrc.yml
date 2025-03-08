@@ -72,6 +72,8 @@ overrides:
           - .node
           - .ts
           - .d.ts
+        resolvePaths:
+          - node_modules/@types
     plugins:
       - "@typescript-eslint"
     parserOptions:
