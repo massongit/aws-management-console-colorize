@@ -65,7 +65,13 @@ overrides:
       - prettier
     parser: "@typescript-eslint/parser"
     settings:
-      tsconfigPath: "./tsconfig.json"
+      node:
+        tryExtensions:
+          - .js
+          - .json
+          - .node
+          - .ts
+          - .d.ts
     plugins:
       - "@typescript-eslint"
     parserOptions:
