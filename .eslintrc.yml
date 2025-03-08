@@ -65,7 +65,7 @@ overrides:
       - prettier
     parser: "@typescript-eslint/parser"
     settings:
-      node:
+      n:
         tryExtensions:
           - .js
           - .json
