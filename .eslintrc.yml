@@ -64,16 +64,6 @@ overrides:
       - plugin:react/recommended
       - prettier
     parser: "@typescript-eslint/parser"
-    settings:
-      n:
-        tryExtensions:
-          - .js
-          - .json
-          - .node
-          - .ts
-          - .d.ts
-        resolvePaths:
-          - node_modules/@types
     plugins:
       - "@typescript-eslint"
     parserOptions:
