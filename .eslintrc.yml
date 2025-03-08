@@ -63,9 +63,8 @@ overrides:
       - plugin:n/recommended
       - plugin:react/recommended
       - prettier
-    rules:
-      n/no-missing-import: off
     parser: "@typescript-eslint/parser"
+    tsconfigPath: "./tsconfig.json"
     plugins:
       - "@typescript-eslint"
     parserOptions:
