@@ -72,4 +72,4 @@ overrides:
       project: "./tsconfig.json"
     settings:
       import/resolver:
-        typescript: { }
+        typescript: {}
