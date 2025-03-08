@@ -65,6 +65,9 @@ overrides:
       - prettier
     rules:
       n/no-missing-import: off
+    settings:
+      react:
+        version: detect
     parser: "@typescript-eslint/parser"
     plugins:
       - "@typescript-eslint"
