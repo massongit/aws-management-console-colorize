@@ -64,7 +64,8 @@ overrides:
       - plugin:react/recommended
       - prettier
     parser: "@typescript-eslint/parser"
-    tsconfigPath: "./tsconfig.json"
+    settings:
+      tsconfigPath: "./tsconfig.json"
     plugins:
       - "@typescript-eslint"
     parserOptions:
