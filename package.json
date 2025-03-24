@@ -35,7 +35,7 @@
     "@proofdict/textlint-rule-proofdict": "3.1.2",
     "@textlint-ja/textlint-rule-no-insert-dropping-sa": "2.0.1",
     "@types/chrome": "0.0.310",
-    "@types/node": "22.13.11",
+    "@types/node": "22.13.13",
     "@types/react": "19.0.12",
     "@types/react-dom": "19.0.4",
     "@wxt-dev/module-react": "1.1.3",
