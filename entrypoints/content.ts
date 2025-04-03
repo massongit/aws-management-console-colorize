@@ -1,3 +1,4 @@
+import { browser, defineContentScript } from "#imports";
 import { z } from "zod";
 import {
   getColorSettingsFromStorage,
