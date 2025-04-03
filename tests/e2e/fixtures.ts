@@ -26,7 +26,9 @@ export const extensionTest = test.extend<{
   context: async ({ context }, use: (r: BrowserContext) => Promise<void>) => {
     context = await chromium.launchPersistentContext("", {
       channel: "chromium",
-      args: [`--disable-extensions-except=${path.resolve("dist/chrome-mv3")}`],
+      args: [
+        `--disable-extensions-except=${path.resolve("dist/chrome-mv3-dev")}`,
+      ],
     });
     await use(context);
     await context.close();
