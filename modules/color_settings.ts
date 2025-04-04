@@ -1,4 +1,4 @@
-import type { StorageItemKey } from "@wxt-dev/storage";
+import type { StorageItemKey } from "#imports";
 import { z } from "zod";
 
 export const colorSettingZodType = z.object({
