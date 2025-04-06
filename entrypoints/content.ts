@@ -205,6 +205,7 @@ async function changeConsoleColor(sessionARN: string) {
 async function onConsoleMessage(
   sessionARN: string,
   message: MessageType,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sendResponse: (response?: any) => void,
 ) {
   switch (message) {
@@ -259,7 +260,12 @@ async function main() {
     .object({ sessionARN: z.string() })
     .parse(JSON.parse(awscSessionData.content)).sessionARN;
   browser.runtime.onMessage.addListener(
-    (message, _, sendResponse: (response?: any) => void) => {
+    (
+      message,
+      _,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      sendResponse: (response?: any) => void,
+    ) => {
       onConsoleMessage(
         sessionARN,
         MessageType[message as keyof typeof MessageType],
