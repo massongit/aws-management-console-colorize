@@ -235,8 +235,8 @@ async function main() {
       return;
     }
 
-    browser.runtime.onMessage.addListener(async (message) => {
-      return await onSessionsSelectorMessage(
+    browser.runtime.onMessage.addListener((message) => {
+      return onSessionsSelectorMessage(
         MessageType[message as keyof typeof MessageType],
       );
     });
@@ -255,8 +255,8 @@ async function main() {
   const sessionARN = z
     .object({ sessionARN: z.string() })
     .parse(JSON.parse(awscSessionData.content)).sessionARN;
-  browser.runtime.onMessage.addListener(async (message) => {
-    return await onConsoleMessage(
+  browser.runtime.onMessage.addListener((message) => {
+    return onConsoleMessage(
       sessionARN,
       MessageType[message as keyof typeof MessageType],
     );
