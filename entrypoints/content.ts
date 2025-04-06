@@ -206,7 +206,7 @@ async function onConsoleMessage(
   sessionARN: string,
   message: MessageType,
   sendResponse: (response?: any) => void,
-): Promise<string | undefined> {
+) {
   switch (message) {
     case MessageType.getSessionARN:
       sendResponse(sessionARN);
