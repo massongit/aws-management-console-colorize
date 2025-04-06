@@ -205,10 +205,12 @@ async function changeConsoleColor(sessionARN: string) {
 async function onConsoleMessage(
   sessionARN: string,
   message: MessageType,
+  sendResponse: (response?: any) => void,
 ): Promise<string | undefined> {
   switch (message) {
     case MessageType.getSessionARN:
-      return sessionARN;
+      sendResponse(sessionARN);
+      return;
     case MessageType.changeColor:
       await changeConsoleColor(sessionARN);
       return;
@@ -236,9 +238,10 @@ async function main() {
     }
 
     browser.runtime.onMessage.addListener((message) => {
-      return onSessionsSelectorMessage(
+      onSessionsSelectorMessage(
         MessageType[message as keyof typeof MessageType],
       );
+      return true;
     });
     await changeSessionsSelectorColor();
     return;
@@ -255,12 +258,16 @@ async function main() {
   const sessionARN = z
     .object({ sessionARN: z.string() })
     .parse(JSON.parse(awscSessionData.content)).sessionARN;
-  browser.runtime.onMessage.addListener((message) => {
-    return onConsoleMessage(
-      sessionARN,
-      MessageType[message as keyof typeof MessageType],
-    );
-  });
+  browser.runtime.onMessage.addListener(
+    (message, _, sendResponse: (response?: any) => void) => {
+      onConsoleMessage(
+        sessionARN,
+        MessageType[message as keyof typeof MessageType],
+        sendResponse,
+      );
+      return true;
+    },
+  );
   await changeConsoleColor(sessionARN);
 }
 
