@@ -1,3 +1,4 @@
+import { browser, defineContentScript } from "#imports";
 import { z } from "zod";
 import {
   getColorSettingsFromStorage,
@@ -204,10 +205,13 @@ async function changeConsoleColor(sessionARN: string) {
 async function onConsoleMessage(
   sessionARN: string,
   message: MessageType,
-): Promise<string | undefined> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sendResponse: (response?: any) => void,
+) {
   switch (message) {
     case MessageType.getSessionARN:
-      return sessionARN;
+      sendResponse(sessionARN);
+      return;
     case MessageType.changeColor:
       await changeConsoleColor(sessionARN);
       return;
@@ -234,10 +238,11 @@ async function main() {
       return;
     }
 
-    browser.runtime.onMessage.addListener(async (message) => {
-      return await onSessionsSelectorMessage(
+    browser.runtime.onMessage.addListener((message) => {
+      onSessionsSelectorMessage(
         MessageType[message as keyof typeof MessageType],
       );
+      return true;
     });
     await changeSessionsSelectorColor();
     return;
@@ -254,12 +259,21 @@ async function main() {
   const sessionARN = z
     .object({ sessionARN: z.string() })
     .parse(JSON.parse(awscSessionData.content)).sessionARN;
-  browser.runtime.onMessage.addListener(async (message) => {
-    return await onConsoleMessage(
-      sessionARN,
-      MessageType[message as keyof typeof MessageType],
-    );
-  });
+  browser.runtime.onMessage.addListener(
+    (
+      message,
+      _,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      sendResponse: (response?: any) => void,
+    ) => {
+      onConsoleMessage(
+        sessionARN,
+        MessageType[message as keyof typeof MessageType],
+        sendResponse,
+      );
+      return true;
+    },
+  );
   await changeConsoleColor(sessionARN);
 }
 

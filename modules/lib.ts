@@ -1,5 +1,3 @@
-import type { Manifest } from "wxt/browser";
-
 export enum MessageType {
   getSessionARN = "getSessionARN",
   changeColor = "changeColor",
@@ -7,11 +5,8 @@ export enum MessageType {
 
 export const signinMatchPattern = "*://*.signin.aws.amazon.com/*";
 
-export function getMatches(): Manifest.ContentScript["matches"] {
-  const matches: Manifest.ContentScript["matches"] = [
-    "*://*.console.aws.amazon.com/*",
-    signinMatchPattern,
-  ];
+export function getMatches(): string[] {
+  const matches = ["*://*.console.aws.amazon.com/*", signinMatchPattern];
   const { BROWSER, MODE } = import.meta.env;
 
   if (BROWSER === "chrome" && MODE === "development") {
