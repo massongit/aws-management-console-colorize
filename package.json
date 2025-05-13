@@ -37,7 +37,7 @@
     "@types/chrome": "0.0.322",
     "@types/node": "22.15.17",
     "@types/react": "19.1.4",
-    "@types/react-dom": "19.1.4",
+    "@types/react-dom": "19.1.5",
     "@wxt-dev/module-react": "1.1.3",
     "@wxt-dev/storage": "1.1.1",
     "prettier": "3.5.3",
