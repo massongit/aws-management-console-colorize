@@ -131,12 +131,12 @@ async function changeSessionsSelectorColor() {
   }).observe(mutationObserveTarget, { childList: true, subtree: true });
 }
 
-async function onSessionsSelectorMessage(message: MessageType) {
+function onSessionsSelectorMessage(message: MessageType) {
   switch (message) {
     case MessageType.getSessionARN:
       return;
     case MessageType.changeColor:
-      await changeSessionsSelectorColor();
+      changeSessionsSelectorColor();
       return;
     default:
       throw new Error(`Incorrect message ${message}`);
@@ -202,7 +202,7 @@ async function changeConsoleColor(sessionARN: string) {
   }
 }
 
-async function onConsoleMessage(
+function onConsoleMessage(
   sessionARN: string,
   message: MessageType,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -211,9 +211,9 @@ async function onConsoleMessage(
   switch (message) {
     case MessageType.getSessionARN:
       sendResponse(sessionARN);
-      return;
+      return true;
     case MessageType.changeColor:
-      await changeConsoleColor(sessionARN);
+      changeConsoleColor(sessionARN);
       return;
     default:
       throw new Error(`Incorrect message ${message}`);
@@ -238,12 +238,11 @@ async function main() {
       return;
     }
 
-    browser.runtime.onMessage.addListener((message) => {
+    browser.runtime.onMessage.addListener((message) =>
       onSessionsSelectorMessage(
         MessageType[message as keyof typeof MessageType],
-      );
-      return true;
-    });
+      ),
+    );
     await changeSessionsSelectorColor();
     return;
   }
@@ -265,14 +264,12 @@ async function main() {
       _,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       sendResponse: (response?: any) => void,
-    ) => {
+    ) =>
       onConsoleMessage(
         sessionARN,
         MessageType[message as keyof typeof MessageType],
         sendResponse,
-      );
-      return true;
-    },
+      ),
   );
   await changeConsoleColor(sessionARN);
 }
