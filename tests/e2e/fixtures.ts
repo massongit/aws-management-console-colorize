@@ -79,6 +79,7 @@ export async function checkInitializeState(
   testData: checkInitializeStateParams,
 ): Promise<void> {
   await expectSessionARN({ ...testData, sessionARN: testData.newSessionARN });
+  await expect(testData.sessionARNsSelect.locator("option")).toHaveCount(1);
   await expect(testData.hexColorInput).toHaveValue("#161d26");
   await expect(testData.addButton).toBeDisabled();
   await expect(testData.updateButton).toBeHidden();

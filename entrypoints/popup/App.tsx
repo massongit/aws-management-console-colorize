@@ -205,6 +205,7 @@ async function setColorSetting({
   await storage.setItem(colorSettingsStorageItemKey, colorSettings);
   await sendMessageToContentScript(MessageType.changeColor);
   const newColorSettings = await getColorSettings(getColorSettingsParams);
+  getColorSettingsParams.setColorSettings(newColorSettings);
 
   if (newColorSettings.length === 0) {
     return;
