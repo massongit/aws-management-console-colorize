@@ -1,6 +1,6 @@
 import React from "react";
 import type { Dispatch, SetStateAction } from "react";
-import type { SafeParseReturnType } from "zod";
+import type { ZodSafeParseResult } from "zod";
 import { browser, storage, useEffect, useState } from "#imports";
 import { ColorPicker, ColorService, useColor } from "react-color-palette";
 import { z } from "zod";
@@ -116,7 +116,7 @@ async function sendMessageToContentScript(
 }
 
 async function getSessionARNFromContentScript(): Promise<
-  SafeParseReturnType<string, string>
+  ZodSafeParseResult<string>
 > {
   return z
     .string()
