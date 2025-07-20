@@ -118,8 +118,6 @@ export default defineConfig([
 
     rules: {
       "n/no-missing-import": "off",
-      "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": "error",
     },
   },
   {
