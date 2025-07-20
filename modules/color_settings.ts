@@ -6,11 +6,10 @@ export const colorSettingZodType = z.object({
   hexColor: z.string(),
 });
 export const colorSettingsZodType = z.array(colorSettingZodType);
-const nullableColorSettingsZodType = colorSettingsZodType.nullable();
 export const colorSettingsStorageItemKey: StorageItemKey = "sync:colorSettings";
 
-export async function getColorSettingsFromStorage(): Promise<
-  z.TypeOf<typeof nullableColorSettingsZodType>
-> {
+export async function getColorSettingsFromStorage(): Promise<z.TypeOf<
+  typeof colorSettingsZodType
+> | null> {
   return await storage.getItem(colorSettingsStorageItemKey);
 }
