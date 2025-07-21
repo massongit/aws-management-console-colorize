@@ -11,6 +11,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
 import { FlatCompat } from "@eslint/eslintrc";
+import autoImports from "./.wxt/eslint-auto-imports.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,6 +22,7 @@ const compat = new FlatCompat({
 });
 
 export default defineConfig([
+  autoImports,
   globalIgnores(["!**/.*", "**/node_modules/.*"]),
   {
     extends: compat.extends("eslint:recommended"),
@@ -104,6 +106,7 @@ export default defineConfig([
       "plugin:n/recommended",
       "plugin:react/recommended",
       "prettier",
+      "plugin:import/typescript",
     ),
 
     plugins: {
@@ -116,13 +119,14 @@ export default defineConfig([
       sourceType: "module",
     },
 
-    rules: {
-      "n/no-missing-import": "off",
-    },
-
     settings: {
       react: {
         version: "detect",
+      },
+      "import/resolver": {
+        typescript: {
+          project: "./tsconfig.json",
+        },
       },
     },
   },
