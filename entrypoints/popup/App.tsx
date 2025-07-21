@@ -8,8 +8,8 @@ import {
   colorSettingsStorageItemKey,
   colorSettingsZodType,
   getColorSettingsFromStorage,
-} from "@/modules/color_settings.ts";
-import { getMatches, MessageType, matchURL } from "@/modules/lib.ts";
+} from "@@/modules/color_settings.ts";
+import { getMatches, MessageType, matchURL } from "@@/modules/lib.ts";
 import "react-color-palette/css";
 import "./App.css";
 

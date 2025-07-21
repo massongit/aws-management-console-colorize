@@ -3,13 +3,13 @@ import { z } from "zod";
 import {
   getColorSettingsFromStorage,
   colorSettingZodType,
-} from "@/modules/color_settings.ts";
+} from "@@/modules/color_settings.ts";
 import {
   signinMatchPattern,
   getMatches,
   MessageType,
   matchURL,
-} from "@/modules/lib.ts";
+} from "@@/modules/lib.ts";
 
 type GetHTMLElementType = () => HTMLElement | null;
 
