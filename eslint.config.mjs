@@ -106,7 +106,6 @@ export default defineConfig([
       "plugin:n/recommended",
       "plugin:react/recommended",
       "prettier",
-      "plugin:import/typescript",
     ),
 
     plugins: {
