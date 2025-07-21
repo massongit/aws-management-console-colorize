@@ -6,7 +6,7 @@
     "baseUrl": ".",
     "paths": {
       "#imports": [".wxt/types/imports.d.ts"],
-      "@/*": ["./*"],
+      "@/*": ["./*"]
     }
   }
 }
