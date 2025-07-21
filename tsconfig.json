@@ -3,6 +3,10 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "jsx": "react-jsx",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "#imports": [".wxt/types/imports.d.ts"],
+      "@/*": ["./*"]
+    }
   }
 }
