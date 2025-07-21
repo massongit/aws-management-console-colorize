@@ -120,7 +120,7 @@ export default defineConfig([
       react: {
         version: "detect",
       },
-      resolvePaths: ".ext",
+      resolvePaths: ".",
       tsconfigPath: "./tsconfig.json",
     },
   },
