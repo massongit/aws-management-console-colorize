@@ -116,10 +116,6 @@ export default defineConfig([
       sourceType: "module",
     },
 
-    rules: {
-      "n/no-missing-import": "off",
-    },
-
     settings: {
       react: {
         version: "detect",
