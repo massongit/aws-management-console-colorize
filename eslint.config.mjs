@@ -120,7 +120,7 @@ export default defineConfig([
       react: {
         version: "detect",
       },
-      resolvePaths: ".",
+      resolvePaths: ".wxt",
     },
   },
   {
