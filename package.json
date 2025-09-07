@@ -39,7 +39,7 @@
     "@types/react": "19.1.12",
     "@types/react-dom": "19.1.9",
     "@wxt-dev/module-react": "1.1.5",
-    "@wxt-dev/storage": "1.1.1",
+    "@wxt-dev/storage": "1.2.0",
     "globals": "16.3.0",
     "prettier": "3.6.2",
     "textlint": "15.2.2",
