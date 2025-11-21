@@ -1,14 +1,14 @@
 {
-	"threshold": 0,
-	"reporters": ["consoleFull"],
-	"ignore": [
-		"**/__snapshots__/**",
-		"**/node_modules/**",
-		"**/dist/**",
-		"**/entrypoints/options/index.html",
-		"**/entrypoints/popup/index.html",
-		"**/tests/e2e/html/console*.html",
-		"**/tests/e2e/*.spec.ts"
-	],
-	"absolute": true
+  "threshold": 0,
+  "reporters": ["consoleFull"],
+  "ignore": [
+    "**/__snapshots__/**",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/entrypoints/options/index.html",
+    "**/entrypoints/popup/index.html",
+    "**/tests/e2e/html/console*.html",
+    "**/tests/e2e/*.spec.ts"
+  ],
+  "absolute": true
 }
