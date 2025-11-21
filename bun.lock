@@ -14,7 +14,7 @@
         "@playwright/test": "1.56.1",
         "@proofdict/textlint-rule-proofdict": "3.1.2",
         "@textlint-ja/textlint-rule-no-insert-dropping-sa": "2.0.1",
-        "@types/chrome": "0.1.29",
+        "@types/chrome": "0.1.30",
         "@types/node": "24.5.2",
         "@types/react": "19.1.15",
         "@types/react-dom": "19.1.9",
@@ -293,7 +293,7 @@
 
     "@types/babel__traverse": ["@types/babel__traverse@7.20.6", "", { "dependencies": { "@babel/types": "^7.20.7" } }, "sha512-r1bzfrm0tomOI8g1SzvCaQHo6Lcv6zu0EA+W2kHrt8dyrHQxGzBBL4kdkzIS+jBMV+EYcMAEAqXqYaLJq5rOZg=="],
 
-    "@types/chrome": ["@types/chrome@0.1.29", "", { "dependencies": { "@types/filesystem": "*", "@types/har-format": "*" } }, "sha512-AMEjLNCFjLWEqXJNbSgZk9+kaC8SX0FOCd46ZZqE2IaCzmeRGbFEhCEbhoV6kzale+WqSeiiqjHgA7Q31shdoA=="],
+    "@types/chrome": ["@types/chrome@0.1.30", "", { "dependencies": { "@types/filesystem": "*", "@types/har-format": "*" } }, "sha512-rcP14i+ip4s3SLG6JzNOWIDd+0i8Bg+kBslHl8d4g6m/e2kEbWnR90AtlOPUZj9ONVRbKxnQUqsInxFzXyqLdA=="],
 
     "@types/debug": ["@types/debug@0.0.30", "", {}, "sha512-orGL5LXERPYsLov6CWs3Fh6203+dXzJkR7OnddIr2514Hsecwc8xRpzCapshBbKFImCsvS/mk6+FWiN5LyZJAQ=="],
 
