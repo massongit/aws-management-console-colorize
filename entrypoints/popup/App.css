@@ -1,27 +1,27 @@
 #root {
-  min-width: 400px;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+	min-width: 400px;
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 2rem;
+	text-align: center;
 }
 
 .card {
-  padding: 2em;
-  grid-template-columns: initial;
+	padding: 2em;
+	grid-template-columns: initial;
 }
 
 .card > #session-arn-field {
-  gap: 10px;
-  width: initial;
-  padding-left: 10px;
-  padding-right: 10px;
+	gap: 10px;
+	width: initial;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .card > #session-arn-field > .rcp-field-input {
-  border-style: double;
+	border-style: double;
 }
 
 .card > button {
-  font-size: 14px;
+	font-size: 14px;
 }
