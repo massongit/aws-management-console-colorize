@@ -34,7 +34,7 @@
     "@playwright/test": "1.57.0",
     "@proofdict/textlint-rule-proofdict": "3.1.2",
     "@textlint-ja/textlint-rule-no-insert-dropping-sa": "2.0.1",
-    "@types/chrome": "0.1.31",
+    "@types/chrome": "0.1.32",
     "@types/node": "24.10.1",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
