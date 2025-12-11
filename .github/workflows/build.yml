@@ -21,7 +21,7 @@ jobs:
       - name: Install
         run: |
           curl -fsSL https://raw.githubusercontent.com/AikidoSec/safe-chain/main/install-scripts/install-safe-chain.sh | sh -s -- --ci
-          bun install
+          bun install --ignore-scripts
       - name: Build
         run: |
           bun run zip:chrome

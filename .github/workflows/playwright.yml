@@ -22,7 +22,7 @@ jobs:
       - name: Install
         run: |
           curl -fsSL https://raw.githubusercontent.com/AikidoSec/safe-chain/main/install-scripts/install-safe-chain.sh | sh -s -- --ci
-          bun install
+          bun install --ignore-scripts
       - run: bunx playwright install --with-deps
       - run: bun run e2e
       - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0

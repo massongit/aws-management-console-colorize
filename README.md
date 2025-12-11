@@ -51,7 +51,7 @@ You can install `pre-commit` by following the instructions at <https://pre-commi
 1. Install `bun` according to [`bun` official site](https://bun.sh/docs/installation)
 2. Install packages using the following command:
    ```Shell
-   bun install
+   bun install --ignore-scripts
    ```
 
 ### Build for production and ZIP output

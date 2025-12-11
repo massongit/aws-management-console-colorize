@@ -32,7 +32,7 @@ jobs:
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
         run: |
           curl -fsSL https://raw.githubusercontent.com/AikidoSec/safe-chain/main/install-scripts/install-safe-chain.sh | sh -s -- --ci
-          bun install
+          bun install --ignore-scripts
       - run: bunx prettier --write .
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
       - uses: dev-hato/actions-diff-pr-management@9de3de40217217a73ac95f3751d7bfe1c9f23ead # v2.2.3
