@@ -40,7 +40,7 @@
     "@types/react-dom": "19.2.3",
     "@wxt-dev/module-react": "1.1.5",
     "@wxt-dev/storage": "1.2.6",
-    "globals": "16.5.0",
+    "globals": "17.0.0",
     "prettier": "3.7.4",
     "textlint": "15.5.0",
     "textlint-filter-rule-comments": "1.2.2",
