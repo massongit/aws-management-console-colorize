@@ -51,9 +51,8 @@ bun run compile
 bun run build:chrome
 bun run build:firefox
 
-# Development builds (for testing)
+# Development build (for testing)
 bun run build:chrome:dev
-bun run build:firefox:dev
 ```
 
 ### Creating Distribution ZIP
@@ -63,9 +62,8 @@ bun run build:firefox:dev
 bun run zip:chrome
 bun run zip:firefox
 
-# Development ZIPs
+# Development ZIP
 bun run zip:chrome:dev
-bun run zip:firefox:dev
 ```
 
 ### Testing
