@@ -16,6 +16,8 @@ permissions:
 jobs:
   format-json-yml:
     runs-on: ubuntu-latest
+    env:
+      SAFE_CHAIN_MINIMUM_PACKAGE_AGE_HOURS: 168 # 7 days
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
@@ -23,16 +25,25 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
+      - uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2.0.2
+        if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        with:
+          bun-version-file: .bun-version
+      - name: Install
+        if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/AikidoSec/safe-chain/main/install-scripts/install-safe-chain.sh | sh -s -- --ci
+          bun install
+      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        run: bash "${GITHUB_WORKSPACE}/scripts/format_json_yml/format_json_yml/format.sh"
+      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        run: find . -type f \( -name '*.json' -o -name '*.geojson' -o -name '*.yaml' -o -name '*.yml' \) -not -path './node_modules/*' -not -path './dist/*' -exec bunx prettier --write {} \;
       - name: Generate a token
         id: generate_token
         uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2.2.1
         with:
           app-id: ${{ secrets.PROJECT_AUTOMATION_APP_ID }}
           private-key: ${{ secrets.PROJECT_AUTOMATION_PRIVATE_KEY }}
-      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
-        run: bash "${GITHUB_WORKSPACE}/scripts/format_json_yml/format_json_yml/format.sh"
-      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
-        run: find . -type f \( -name '*.json' -o -name '*.geojson' -o -name '*.yaml' -o -name '*.yml' \) -not -path './node_modules/*' -not -path './dist/*' -exec bunx prettier --write {} \;
       - uses: dev-hato/actions-diff-pr-management@9de3de40217217a73ac95f3751d7bfe1c9f23ead # v2.2.3
         with:
           github-token: ${{steps.generate_token.outputs.token}}
