@@ -29,9 +29,16 @@ jobs:
         with:
           app-id: ${{ secrets.PROJECT_AUTOMATION_APP_ID }}
           private-key: ${{ secrets.PROJECT_AUTOMATION_PRIVATE_KEY }}
-      - uses: dev-hato/actions-format-json-yml@5465272ec5e18446182b39f4a7f817a67d16875a # v0.0.96
+      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        run: bash "${GITHUB_WORKSPACE}/scripts/action/format.sh"
+      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        run: find . -type f \( -name '*.json' -o -name '*.geojson' -o -name '*.yaml' -o -name '*.yml' \) -not -path './node_modules/*' -not -path './dist/*' -exec bunx prettier --write {} \;
+      - uses: dev-hato/actions-diff-pr-management@9de3de40217217a73ac95f3751d7bfe1c9f23ead # v2.2.3
         with:
           github-token: ${{steps.generate_token.outputs.token}}
+          branch-name-prefix: fix-format-json-yml
+          pr-title-prefix: Fix JSON/YAML format
+          pr-description-prefix: CI fixed JSON/YAML format.
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
