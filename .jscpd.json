@@ -1,6 +1,8 @@
 {
   "threshold": 0,
-  "reporters": ["consoleFull"],
+  "reporters": [
+    "consoleFull"
+  ],
   "ignore": [
     "**/__snapshots__/**",
     "**/node_modules/**",
