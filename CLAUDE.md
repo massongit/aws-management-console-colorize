@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a browser extension for Chrome and Firefox that colorizes the AWS Management Console. It allows users to assign colors to different AWS session ARNs to differentiate between multiple accounts and roles.
 
 The extension consists of:
+
 - A **content script** that modifies AWS console pages (header, footer, session selector)
 - A **popup UI** (React-based) for managing color settings per session ARN
 - Color settings stored in browser storage (synced across devices)
@@ -22,11 +23,13 @@ The extension consists of:
 ## Development Commands
 
 ### Initial Setup
+
 ```bash
 bun install
 ```
 
 ### Development Mode
+
 ```bash
 # Chrome extension with live reload
 bun run dev:chrome
@@ -36,6 +39,7 @@ bun run dev:firefox
 ```
 
 ### Building
+
 ```bash
 # Type check (runs before all builds)
 bun run compile
@@ -50,6 +54,7 @@ bun run build:firefox:dev
 ```
 
 ### Creating Distribution ZIP
+
 ```bash
 # Production ZIPs (outputs to dist/)
 bun run zip:chrome
@@ -61,12 +66,14 @@ bun run zip:firefox:dev
 ```
 
 ### Testing
+
 ```bash
 # Run E2E tests (builds dev Chrome extension first)
 bun run e2e
 ```
 
 ### Linting
+
 ```bash
 # Format with Prettier
 bunx prettier --write .
@@ -101,6 +108,7 @@ bunx prettier --write .
 ### WXT Configuration
 
 `wxt.config.ts` defines:
+
 - Manifest settings (name, permissions)
 - Browser-specific configuration
 - Development keys for consistent extension IDs during testing
@@ -108,12 +116,14 @@ bunx prettier --write .
 ### Message Passing Architecture
 
 The extension uses two message types between popup and content script:
+
 1. `getSessionARN`: Popup requests current session ARN from content script
 2. `changeColor`: Popup notifies content script to refresh colors after settings change
 
 ### Multi-page Support
 
 Content script handles two AWS page types:
+
 1. **Console pages** (`*.console.aws.amazon.com`): Colors header and footer navigation
 2. **Session selector** (`*.signin.aws.amazon.com/sessions/selector`): Adds color blocks to session cards
 
@@ -125,12 +135,15 @@ Content script handles two AWS page types:
 ## Important Patterns
 
 ### Type Safety with Zod
+
 Runtime validation with Zod ensures color settings from storage match expected schema. All storage reads are validated.
 
 ### Async Initialization
+
 Content script uses MutationObserver pattern when target elements aren't immediately available (AWS console uses dynamic rendering).
 
 ### Storage Sync
+
 Color settings use `sync:` storage prefix, automatically syncing across user's devices.
 
 ## Testing Notes
@@ -140,6 +153,7 @@ E2E tests (`tests/e2e/`) use Playwright with chromium profile. The dev build all
 ## CI/CD
 
 The project uses GitHub Actions with:
+
 - `format.yml`: Auto-formatting with Prettier
 - `playwright.yml`: E2E test execution
 - `super-linter.yml`: Multi-language linting
