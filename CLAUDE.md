@@ -1,10 +1,13 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code).
+It helps when working with code in this repository.
 
 ## Project Overview
 
-This is a browser extension for Chrome and Firefox that colorizes the AWS Management Console. It allows users to assign colors to different AWS session ARNs to differentiate between multiple accounts and roles.
+This is a browser extension for Chrome and Firefox that colorizes the AWS Management Console.
+It allows users to assign colors to different AWS session ARNs.
+This helps differentiate between multiple accounts and roles.
 
 The extension consists of:
 
@@ -14,11 +17,11 @@ The extension consists of:
 
 ## Technology Stack
 
-- **Build tool**: WXT (Web Extension Tools) - modern framework for building browser extensions
+- **Build tool**: WXT (WebExtension Tools) - modern framework for building browser extensions
 - **Runtime**: Bun (specified in `.bun-version`)
 - **TypeScript**: Strict type checking with Zod for runtime validation
 - **React**: Popup UI built with React 19 and react-color-palette
-- **Testing**: Playwright for E2E tests
+- **Testing**: Playwright for end-to-end tests
 
 ## Development Commands
 
@@ -140,7 +143,8 @@ Runtime validation with Zod ensures color settings from storage match expected s
 
 ### Async Initialization
 
-Content script uses MutationObserver pattern when target elements aren't immediately available (AWS console uses dynamic rendering).
+Content script uses MutationObserver pattern when target elements aren't immediately available.
+This is because AWS console uses dynamic rendering.
 
 ### Storage Sync
 
@@ -148,13 +152,13 @@ Color settings use `sync:` storage prefix, automatically syncing across user's d
 
 ## Testing Notes
 
-E2E tests (`tests/e2e/`) use Playwright with chromium profile. The dev build allows file:// protocol for loading local HTML fixtures.
+End-to-end tests (`tests/e2e/`) use Playwright with chromium profile. The dev build allows file:// protocol for loading local HTML fixtures.
 
 ## CI/CD
 
 The project uses GitHub Actions with:
 
-- `format.yml`: Auto-formatting with Prettier
-- `playwright.yml`: E2E test execution
+- `format.yml`: autoformatting with Prettier
+- `playwright.yml`: end-to-end test execution
 - `super-linter.yml`: Multi-language linting
 - Security scanning with CodeQL and OSV-Scanner
