@@ -1,13 +1,12 @@
 ---
-name: build
+name: release
 on:
-  pull_request:
-  push:
-    branches:
-      - main
+  release:
+    types:
+      - published
 permissions: read-all
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     env:
       SAFE_CHAIN_MINIMUM_PACKAGE_AGE_HOURS: 168 # 7日
@@ -26,9 +25,19 @@ jobs:
         run: |
           bun run zip:chrome
           bun run zip:firefox
-      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
-        with:
-          path: dist/
+      - name: Submit to stores
+        run: |
+          bunx wxt submit \
+               --chrome-zip .output/*-chrome.zip \
+               --firefox-zip .output/*-firefox.zip --firefox-sources-zip .output/*-sources.zip
+        env:
+          CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+          CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+          CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
+          CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
+          FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_JWT_ISSUER }}
+          FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_JWT_SECRET }}
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
