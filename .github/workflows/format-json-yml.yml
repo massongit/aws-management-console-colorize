@@ -30,7 +30,7 @@ jobs:
           app-id: ${{ secrets.PROJECT_AUTOMATION_APP_ID }}
           private-key: ${{ secrets.PROJECT_AUTOMATION_PRIVATE_KEY }}
       - if: github.event_name != 'pull_request' || github.event.action != 'closed'
-        run: bash "${GITHUB_WORKSPACE}/scripts/action/format.sh"
+        run: bash "${GITHUB_WORKSPACE}/scripts/format_json_yml/format_json_yml/format.sh"
       - if: github.event_name != 'pull_request' || github.event.action != 'closed'
         run: find . -type f \( -name '*.json' -o -name '*.geojson' -o -name '*.yaml' -o -name '*.yml' \) -not -path './node_modules/*' -not -path './dist/*' -exec bunx prettier --write {} \;
       - uses: dev-hato/actions-diff-pr-management@9de3de40217217a73ac95f3751d7bfe1c9f23ead # v2.2.3
