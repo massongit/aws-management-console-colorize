@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules
 .output
 dist
+!dist/chrome-mv3
+!dist/firefox-mv2
 stats.html
 stats-*.json
 .wxt
