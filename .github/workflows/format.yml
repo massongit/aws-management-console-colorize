@@ -39,6 +39,8 @@ jobs:
         run: |
           curl -fsSL https://raw.githubusercontent.com/AikidoSec/safe-chain/main/install-scripts/install-safe-chain.sh | sh -s -- --ci
           bun install
+      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        run: bash "${GITHUB_WORKSPACE}/scripts/format/format/format.sh"
       - run: bunx prettier --write .
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
       - name: Build
