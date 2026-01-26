@@ -40,7 +40,7 @@
     "@wxt-dev/storage": "1.2.6",
     "globals": "17.0.0",
     "prettier": "3.8.0",
-    "textlint": "15.5.0",
+    "textlint": "15.5.1",
     "textlint-filter-rule-comments": "1.3.0",
     "textlint-rule-abbr-within-parentheses": "1.0.2",
     "textlint-rule-footnote-order": "1.0.3",
