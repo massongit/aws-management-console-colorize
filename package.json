@@ -34,7 +34,7 @@
     "@textlint-ja/textlint-rule-no-insert-dropping-sa": "2.0.1",
     "@types/chrome": "0.1.36",
     "@types/node": "25.0.9",
-    "@types/react": "19.2.9",
+    "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@wxt-dev/module-react": "1.1.5",
     "@wxt-dev/storage": "1.2.7",
