@@ -25,15 +25,6 @@ jobs:
         run: |
           bun run zip:chrome
           bun run zip:firefox
-      - name: Get Firefox add-on ID
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
-        id: get_firefox_addon_id
-        with:
-          result-encoding: string
-          script: |
-            const {tsImport} = require('tsx/esm/api')
-            const {firefoxAddonID} = await tsImport( './constant.ts', process.env.GITHUB_WORKSPACE + '/')
-            return firefoxAddonID
       - name: Submit to stores
         run: |
           bunx wxt submit \
@@ -44,7 +35,7 @@ jobs:
           CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
           CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
           CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
-          FIREFOX_EXTENSION_ID: ${{ steps.get_firefox_addon_id.outputs.result }}
+          FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
           FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_JWT_ISSUER }}
           FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_JWT_SECRET }}
 concurrency:
