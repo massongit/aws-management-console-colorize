@@ -119,6 +119,12 @@ export default defineConfig([
     rules: {
       "n/no-missing-import": "off",
     },
+
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
   },
   ...pluginVue.configs["flat/recommended"],
 ]);
