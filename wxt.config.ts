@@ -1,6 +1,5 @@
 import type { ConfigEnv, UserManifest } from "wxt";
 import { defineConfig } from "wxt";
-import { firefoxAddonID } from "./constant.ts";
 
 function manifest(env: ConfigEnv): UserManifest {
   return {
@@ -16,7 +15,7 @@ function manifest(env: ConfigEnv): UserManifest {
       env.browser === "firefox"
         ? {
             gecko: {
-              id: firefoxAddonID,
+              id: "{f5ee4589-0248-4dad-b389-8a206e0a0b7c}",
 
               // https://extensionworkshop.com/documentation/develop/firefox-builtin-data-consent/
               // TODO: Remove next line once WXT supports data_collection_permissions
