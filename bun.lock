@@ -19,7 +19,7 @@
         "@types/react": "19.2.14",
         "@types/react-dom": "19.2.3",
         "@wxt-dev/module-react": "1.1.5",
-        "@wxt-dev/storage": "1.2.7",
+        "@wxt-dev/storage": "1.2.8",
         "globals": "17.3.0",
         "prettier": "3.8.1",
         "textlint": "15.5.2",
@@ -344,7 +344,7 @@
 
     "@wxt-dev/module-react": ["@wxt-dev/module-react@1.1.5", "", { "dependencies": { "@vitejs/plugin-react": "^4.4.1 || ^5.0.0" }, "peerDependencies": { "wxt": ">=0.19.16" } }, "sha512-KgsUrsgH5rBT8MwiipnDEOHBXmLvTIdFICrI7KjngqSf9DpVRn92HsKmToxY0AYpkP19hHWta2oNYFTzmmm++g=="],
 
-    "@wxt-dev/storage": ["@wxt-dev/storage@1.2.7", "", { "dependencies": { "@wxt-dev/browser": "^0.1.36", "async-mutex": "^0.5.0", "dequal": "^2.0.3" } }, "sha512-+rfRmfF2Wd6knXSFfgjLHelKEVnlryI/UG2/gNbO9U/KZJtSvo8QkGSJ1iJQ7jLYCYD+oYCzMZdL7D4BJLCUkw=="],
+    "@wxt-dev/storage": ["@wxt-dev/storage@1.2.8", "", { "dependencies": { "@wxt-dev/browser": "^0.1.37", "async-mutex": "^0.5.0", "dequal": "^2.0.3" } }, "sha512-GWCFKgF5+d7eslOxUDFC70ypA9njupmJb1nQM8uZoX0J3sWT2BO5xJLzb1sYahWAfID9p2BMtnUBN1lkWxPsbQ=="],
 
     "accepts": ["accepts@2.0.0", "", { "dependencies": { "mime-types": "^3.0.0", "negotiator": "^1.0.0" } }, "sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng=="],
 
@@ -1981,6 +1981,8 @@
     "wrap-ansi/string-width": ["string-width@7.2.0", "", { "dependencies": { "emoji-regex": "^10.3.0", "get-east-asian-width": "^1.0.0", "strip-ansi": "^7.1.0" } }, "sha512-tsaTIkKW9b4N+AEj+SVA+WhJzV7/zMhcSu78mLKWSk7cXMOSHsBKFWUs0fWwq8QyK3MgJBQRX6Gbi4kYbdvGkQ=="],
 
     "wrap-ansi/strip-ansi": ["strip-ansi@7.1.2", "", { "dependencies": { "ansi-regex": "^6.0.1" } }, "sha512-gmBGslpoQJtgnMAvOVqGZpEz9dyoKTCzy2nfz/n8aIFhN/jCE/rCmcxabB6jOOHV+0WNnylOxaxBQPSvcWklhA=="],
+
+    "wxt/@wxt-dev/storage": ["@wxt-dev/storage@1.2.7", "", { "dependencies": { "@wxt-dev/browser": "^0.1.36", "async-mutex": "^0.5.0", "dequal": "^2.0.3" } }, "sha512-+rfRmfF2Wd6knXSFfgjLHelKEVnlryI/UG2/gNbO9U/KZJtSvo8QkGSJ1iJQ7jLYCYD+oYCzMZdL7D4BJLCUkw=="],
 
     "zip-dir/async": ["async@3.2.6", "", {}, "sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA=="],
 
