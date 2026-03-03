@@ -20,7 +20,7 @@
     "postinstall": "wxt prepare"
   },
   "engines": {
-    "node": "24.13.1"
+    "node": "24.14.0"
   },
   "dependencies": {
     "react": "^19.0.0",
