@@ -16,6 +16,7 @@ permissions:
 jobs:
   format:
     runs-on: ubuntu-latest
+    environment: ci
     env:
       SAFE_CHAIN_MINIMUM_PACKAGE_AGE_HOURS: 168 # 7日
     steps:
