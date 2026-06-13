@@ -18,8 +18,6 @@ function manifest(env: ConfigEnv): UserManifest {
               id: "{f5ee4589-0248-4dad-b389-8a206e0a0b7c}",
 
               // https://extensionworkshop.com/documentation/develop/firefox-builtin-data-consent/
-              // TODO: Remove next line once WXT supports data_collection_permissions
-              // @ts-expect-error WXT types don't include data_collection_permissions yet
               data_collection_permissions: {
                 required: ["none"],
               },
