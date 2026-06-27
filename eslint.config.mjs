@@ -87,6 +87,16 @@ export default defineConfig([
       ecmaVersion: "latest",
       sourceType: "module",
     },
+
+    rules: {
+      "n/no-missing-import": "off",
+    },
+
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
   },
   ...pluginVue.configs["flat/recommended"],
 ]);
