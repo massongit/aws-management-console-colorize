@@ -104,7 +104,7 @@ bunx prettier --write .
 - **`lib.ts`**: Shared utilities
   - `MessageType` enum for popup ↔ content script communication
   - URL matching patterns for AWS console domains
-  - `getMatches()`: Returns content script match patterns (includes file:// in dev mode)
+  - `getMatches()`: Returns content script match patterns (includes `file://` in dev mode)
 
 ### WXT Configuration
 
@@ -150,7 +150,7 @@ Color settings use `sync:` storage prefix, automatically syncing across user's d
 
 ## Testing Notes
 
-End-to-end tests (`tests/e2e/`) use Playwright with chromium profile. The dev build allows file:// protocol for loading local HTML fixtures.
+End-to-end tests (`tests/e2e/`) use Playwright with chromium profile. The dev build allows `file://` protocol for loading local HTML fixtures.
 
 ## CI/CD
 
