@@ -9,8 +9,6 @@ jobs:
   release:
     runs-on: ubuntu-latest
     environment: release
-    env:
-      SAFE_CHAIN_MINIMUM_PACKAGE_AGE_HOURS: 168 # 7日
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
@@ -29,10 +27,8 @@ jobs:
         with:
           bun-version-file: .bun-version
           no-cache: true
-      - name: Install
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/AikidoSec/safe-chain/main/install-scripts/install-safe-chain.sh | sh -s -- --ci
-          bun install
+      - uses: flatt-security/setup-takumi-guard-npm@9a5d797c2085b6326d3a2985c08e3a114b9b88c1 # v1.1.1
+      - run: bun install
       - name: Build
         run: |
           bun run zip:chrome
