@@ -11,6 +11,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      # jscpd:ignore-start
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           persist-credentials: false
@@ -19,6 +20,7 @@ jobs:
           bun-version-file: .bun-version
       - uses: flatt-security/setup-takumi-guard-npm@9a5d797c2085b6326d3a2985c08e3a114b9b88c1 # v1.1.1
       - run: bun install
+      # jscpd:ignore-end
       - run: bunx playwright install --with-deps
       - run: bun run e2e
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
