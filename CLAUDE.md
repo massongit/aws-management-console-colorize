@@ -15,71 +15,6 @@ The extension consists of:
 - A **popup UI** (React-based) for managing color settings per session ARN
 - Color settings stored in browser storage (synced across devices)
 
-## Technology Stack
-
-- **Build tool**: WXT (WebExtension Tools) - modern framework for building browser extensions
-- **Runtime**: Bun (specified in `.bun-version`)
-- **TypeScript**: Strict type checking with Zod for runtime validation
-- **React**: Popup UI built with React 19 and react-color-palette
-- **Testing**: Playwright for end-to-end tests
-
-## Development Commands
-
-### Initial Setup
-
-```bash
-bun install
-```
-
-### Development Mode
-
-```bash
-# Chrome extension with live reload
-bun run dev:chrome
-
-# Firefox extension with live reload
-bun run dev:firefox
-```
-
-### Building
-
-```bash
-# Type check (runs before all builds)
-bun run compile
-
-# Production builds
-bun run build:chrome
-bun run build:firefox
-
-# Development build (for testing)
-bun run build:chrome:dev
-```
-
-### Creating Distribution ZIP
-
-```bash
-# Production ZIPs (outputs to dist/)
-bun run zip:chrome
-bun run zip:firefox
-
-# Development ZIP
-bun run zip:chrome:dev
-```
-
-### Testing
-
-```bash
-# Run E2E tests (builds dev Chrome extension first)
-bun run e2e
-```
-
-### Linting
-
-```bash
-# Format with Prettier
-bunx prettier --write .
-```
-
 ## Code Architecture
 
 ### Entry Points (`entrypoints/`)
@@ -151,12 +86,3 @@ Color settings use `sync:` storage prefix, automatically syncing across user's d
 ## Testing Notes
 
 End-to-end tests (`tests/e2e/`) use Playwright with chromium profile. The dev build allows `file://` protocol for loading local HTML fixtures.
-
-## CI/CD
-
-The project uses GitHub Actions with:
-
-- `format.yml`: autoformatting with Prettier
-- `playwright.yml`: end-to-end test execution
-- `super-linter.yml`: Multi-language linting
-- Security scanning with CodeQL and OSV-Scanner
