@@ -73,11 +73,13 @@ async function runChangeSessionsSelectorColor(): Promise<boolean> {
 
     const colorSetting = colorSettings.find(({ sessionARN }) => {
       return (
-        awsAccountTextContents.find((c) =>
-          sessionARN.includes(
-            `:${c.replaceAll("-", "").replace("(", "").replace(")", "")}:`,
-          ),
-        ) !== undefined &&
+        awsAccountTextContents.some((c) => {
+          const awsAccountID = c.replace(/\D/g, "");
+          return (
+            awsAccountID.length === 12 &&
+            sessionARN.includes(`:${awsAccountID}:`)
+          );
+        }) &&
         sessionARN.endsWith(`/${sessionCardSessionCardUsernameText.trim()}`)
       );
     });
