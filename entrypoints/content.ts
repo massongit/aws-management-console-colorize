@@ -41,14 +41,14 @@ async function runChangeSessionsSelectorColor(): Promise<boolean> {
   }
 
   for (const awsUIRestorePointerEvents of awsUIRestorePointerEventsList) {
-    const awsAccountTextContent = ["span", "a"]
+    const awsAccountTextContents = ["span", "a"]
       .flatMap((t) => {
         return Array.from(awsUIRestorePointerEvents.getElementsByTagName(t));
       })
       .map(({ textContent }) => textContent)
-      .find((textContent) => textContent !== null);
+      .filter((textContent) => textContent !== null);
 
-    if (awsAccountTextContent === undefined) {
+    if (awsAccountTextContents.length === 0) {
       continue;
     }
 
@@ -69,12 +69,12 @@ async function runChangeSessionsSelectorColor(): Promise<boolean> {
     }
 
     const colorSetting = colorSettings.find(({ sessionARN }) => {
-      const awsAccountID = awsAccountTextContent
-        .replaceAll("-", "")
-        .replace("(", "")
-        .replace(")", "");
       return (
-        sessionARN.includes(`:${awsAccountID}:`) &&
+        awsAccountTextContents.find((c) =>
+          sessionARN.includes(
+            `:${c.replaceAll("-", "").replace("(", "").replace(")", "")}:`,
+          ),
+        ) !== undefined &&
         sessionARN.endsWith(`/${sessionCardSessionCardUsernameText.trim()}`)
       );
     });
