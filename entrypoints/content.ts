@@ -45,8 +45,11 @@ async function runChangeSessionsSelectorColor(): Promise<boolean> {
       .flatMap((t) => {
         return Array.from(awsUIRestorePointerEvents.getElementsByTagName(t));
       })
-      .map(({ textContent }) => textContent)
-      .filter((textContent) => textContent !== null);
+      .map(({ textContent }) => textContent?.trim())
+      .filter(
+        (textContent): textContent is string =>
+          textContent !== undefined && textContent !== "",
+      );
 
     if (awsAccountTextContents.length === 0) {
       continue;
