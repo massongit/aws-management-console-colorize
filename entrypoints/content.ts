@@ -41,13 +41,15 @@ async function runChangeSessionsSelectorColor(): Promise<boolean> {
   }
 
   for (const awsUIRestorePointerEvents of awsUIRestorePointerEventsList) {
-    const awsAccountTextContents = ["span", "a"]
+    const awsAccountTextContents: string[] = ["span", "a"]
       .flatMap((t) => {
         return Array.from(awsUIRestorePointerEvents.getElementsByTagName(t));
       })
-      .map(({ textContent }) => textContent?.trim())
+      .map(({ textContent }: Element): string | undefined =>
+        textContent?.trim(),
+      )
       .filter(
-        (textContent): textContent is string =>
+        (textContent?: string): textContent is string =>
           textContent !== undefined && textContent !== "",
       );
 
@@ -73,8 +75,8 @@ async function runChangeSessionsSelectorColor(): Promise<boolean> {
 
     const colorSetting = colorSettings.find(({ sessionARN }) => {
       return (
-        awsAccountTextContents.some((c) => {
-          const awsAccountID = c.replace(/\D/g, "");
+        awsAccountTextContents.some((c: string): boolean => {
+          const awsAccountID: string = c.replace(/\D/g, "");
           return (
             awsAccountID.length === 12 &&
             sessionARN.includes(`:${awsAccountID}:`)
