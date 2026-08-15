@@ -107,11 +107,17 @@ async function sendMessageToContentScript(
     throw new Error("Can't get tabs");
   }
 
+  const tab = tabs[0];
+
+  if (tab === undefined) {
+    throw new Error("Can't get a tab");
+  }
+
   const filteredMatches = getMatches().filter((m) => {
-    return matchURL(m, z.string().parse(tabs[0].url));
+    return matchURL(m, z.string().parse(tab.url));
   });
   return 0 < filteredMatches.length
-    ? await browser.tabs.sendMessage(z.number().parse(tabs[0].id), message)
+    ? await browser.tabs.sendMessage(z.number().parse(tab.id), message)
     : undefined;
 }
 
@@ -134,9 +140,15 @@ function setExistColorSettingState({
   setIndex: SetIndexType;
   setHexColor: SetHexColorType;
 }) {
+  const colorSetting = colorSettings[index];
+
+  if (colorSetting === undefined) {
+    throw new Error("Can't get a colorSetting");
+  }
+
   setColorSettingState({
     index: index,
-    hexColor: colorSettings[index].hexColor,
+    hexColor: colorSetting.hexColor,
     setIndex,
     setHexColor,
   });
