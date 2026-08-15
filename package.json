@@ -54,6 +54,6 @@
     "textlint-rule-preset-ja-technical-writing": "12.0.2",
     "textlint-rule-terminology": "5.2.16",
     "typescript": "7.0.2",
-    "wxt": "0.21.3"
+    "wxt": "0.21.4"
   }
 }
