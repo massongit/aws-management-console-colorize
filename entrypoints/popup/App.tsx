@@ -5,6 +5,12 @@ import { browser, storage, useEffect, useState } from "#imports";
 import { HexColorInput, HexColorPicker } from "react-colorful";
 import { z } from "zod";
 import {
+  hexToHsvText,
+  hexToRgbText,
+  hsvTextToHex,
+  rgbTextToHex,
+} from "@/modules/color_conversion.ts";
+import {
   colorSettingsStorageItemKey,
   colorSettingsZodType,
   getColorSettingsFromStorage,
@@ -276,11 +282,72 @@ async function onUpdateButtonClick(
   });
 }
 
+function useColorText(
+  color: string,
+  toText: (hex: string) => string,
+  fromText: (text: string) => string | undefined,
+  setColor: SetHexColorType,
+): [string, (text: string) => void] {
+  const [text, setText] = useState(() => toText(color));
+  useEffect(() => {
+    setText(toText(color));
+  }, [color, toText]);
+  return [
+    text,
+    (newText: string) => {
+      setText(newText);
+      const hex = fromText(newText);
+
+      if (hex !== undefined) {
+        setColor(hex);
+      }
+    },
+  ];
+}
+
+function ColorTextField({
+  id,
+  label,
+  text,
+  onChangeText,
+}: {
+  id: string;
+  label: string;
+  text: string;
+  onChangeText: (text: string) => void;
+}) {
+  return (
+    <div className="field">
+      <input
+        id={id}
+        className="field-input"
+        value={text}
+        onChange={({ target: { value } }) => onChangeText(value)}
+      />
+      <label htmlFor={id} className="field-label">
+        {label}
+      </label>
+    </div>
+  );
+}
+
 function App() {
   const [colorSettings, setColorSettings] = useState<ColorSettingsType>([]);
   const [index, setIndex] = useState(indexOfNewColorSetting);
   const [sessionARN, setSessionARN] = useState("");
   const [color, setColor] = useState(defaultHexColor);
+  const [rgbText, onRgbTextChange] = useColorText(
+    color,
+    hexToRgbText,
+    rgbTextToHex,
+    setColor,
+  );
+  const [hsvText, onHsvTextChange] = useColorText(
+    color,
+    hexToHsvText,
+    hsvTextToHex,
+    setColor,
+  );
   useEffect(() => {
     initialize({
       setColorSettings,
@@ -334,18 +401,32 @@ function App() {
             Session ARN
           </label>
         </div>
-        <div id="hex-color-field" className="field">
+        <div id="hex-color-field" className="field color-panel">
           <HexColorPicker color={color} onChange={setColor} />
-          <HexColorInput
-            id="hex-color-input"
-            className="field-input"
-            color={color}
-            onChange={setColor}
-            prefixed={true}
+          <div className="field">
+            <HexColorInput
+              id="hex-color-input"
+              className="field-input"
+              color={color}
+              onChange={setColor}
+              prefixed={true}
+            />
+            <label htmlFor="hex-color-input" className="field-label">
+              HEX
+            </label>
+          </div>
+          <ColorTextField
+            id="rgb-color-input"
+            label="RGB"
+            text={rgbText}
+            onChangeText={onRgbTextChange}
           />
-          <label htmlFor="hex-color-input" className="field-label">
-            HEX
-          </label>
+          <ColorTextField
+            id="hsv-color-input"
+            label="HSV"
+            text={hsvText}
+            onChangeText={onHsvTextChange}
+          />
         </div>
         {isIndexOfNewColorSetting && (
           <button

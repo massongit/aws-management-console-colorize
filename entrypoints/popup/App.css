@@ -1,9 +1,3 @@
-:root {
-  --field-input-color: #ffffff;
-  --field-input-border-color: #242424;
-  --field-label-color: #808080;
-}
-
 #root {
   min-width: 400px;
   max-width: 1280px;
@@ -48,8 +42,19 @@
   color: var(--field-label-color);
 }
 
-.react-colorful {
+.color-panel {
+  --field-input-color: #ffffff;
+  --field-input-border-color: #242424;
+  --field-label-color: #808080;
+  gap: 10px;
+  padding: 16px;
+  background-color: #121212;
+  border-radius: 8px;
+}
+
+.color-panel .react-colorful {
   width: 100%;
+  height: 300px;
 }
 
 .card > #session-arn-field {
