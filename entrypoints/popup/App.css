@@ -1,3 +1,9 @@
+:root {
+  --field-input-color: #ffffff;
+  --field-input-border-color: #242424;
+  --field-label-color: #808080;
+}
+
 #root {
   min-width: 400px;
   max-width: 1280px;
@@ -11,6 +17,41 @@
   grid-template-columns: initial;
 }
 
+.fields-floor {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.field-input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 14px;
+  text-align: center;
+  color: var(--field-input-color);
+  background-color: transparent;
+  border: 2px solid var(--field-input-border-color);
+  border-radius: 5px;
+  outline: none;
+  padding: 5px 0;
+}
+
+.field-label {
+  font-size: 14px;
+  text-align: center;
+  color: var(--field-label-color);
+}
+
+.react-colorful {
+  width: 100%;
+}
+
 .card > #session-arn-field {
   gap: 10px;
   width: initial;
@@ -18,7 +59,7 @@
   padding-right: 10px;
 }
 
-.card > #session-arn-field > .rcp-field-input {
+.card > #session-arn-field > .field-input {
   border-style: double;
 }
 

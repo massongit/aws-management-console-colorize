@@ -2,7 +2,7 @@ import React from "react";
 import type { Dispatch, SetStateAction } from "react";
 import type { ZodSafeParseResult } from "zod";
 import { browser, storage, useEffect, useState } from "#imports";
-import { ColorPicker, ColorService, useColor } from "react-color-palette";
+import { HexColorInput, HexColorPicker } from "react-colorful";
 import { z } from "zod";
 import {
   colorSettingsStorageItemKey,
@@ -10,7 +10,6 @@ import {
   getColorSettingsFromStorage,
 } from "@/modules/color_settings.ts";
 import { getMatches, MessageType, matchURL } from "@/modules/lib.ts";
-import "react-color-palette/css";
 import "./App.css";
 
 type ColorSettingsType = z.TypeOf<typeof colorSettingsZodType>;
@@ -20,7 +19,7 @@ type GetColorSettingsParamsType = {
   setColorSettings: Dispatch<SetStateAction<ColorSettingsType>>;
   setIndex: SetIndexType;
   setSessionARN: Dispatch<SetStateAction<string>>;
-  setHexColor: SetHexColorType;
+  setColor: SetHexColorType;
 };
 type SetColorSettingParamsType = {
   colorSettings: ColorSettingsType;
@@ -35,33 +34,33 @@ function setColorSettingState({
   index,
   hexColor,
   setIndex,
-  setHexColor,
+  setColor,
 }: {
   index: number;
   hexColor: string;
   setIndex: SetIndexType;
-  setHexColor: SetHexColorType;
+  setColor: SetHexColorType;
 }) {
   setIndex(index);
-  setHexColor(hexColor);
+  setColor(hexColor);
 }
 
 async function setNewColorSettingState({
   colorSettings,
   setIndex,
   setSessionARN,
-  setHexColor,
+  setColor,
 }: {
   colorSettings: ColorSettingsType;
   setIndex: SetIndexType;
   setSessionARN: Dispatch<SetStateAction<string>>;
-  setHexColor: SetHexColorType;
+  setColor: SetHexColorType;
 }) {
   setColorSettingState({
     index: indexOfNewColorSetting,
     hexColor: defaultHexColor,
     setIndex,
-    setHexColor,
+    setColor,
   });
   const { success, data } = await getSessionARNFromContentScript();
 
@@ -78,7 +77,7 @@ async function getColorSettings({
   setColorSettings,
   setIndex,
   setSessionARN,
-  setHexColor,
+  setColor,
 }: GetColorSettingsParamsType): Promise<ColorSettingsType> {
   const colorSettings = await getColorSettingsFromStorage();
   const fixedColorSettings =
@@ -91,7 +90,7 @@ async function getColorSettings({
       colorSettings: fixedColorSettings,
       setIndex,
       setSessionARN,
-      setHexColor,
+      setColor,
     });
   }
 
@@ -133,12 +132,12 @@ function setExistColorSettingState({
   colorSettings,
   index,
   setIndex,
-  setHexColor,
+  setColor,
 }: {
   colorSettings: ColorSettingsType;
   index: number;
   setIndex: SetIndexType;
-  setHexColor: SetHexColorType;
+  setColor: SetHexColorType;
 }) {
   const colorSetting = colorSettings[index];
 
@@ -150,7 +149,7 @@ function setExistColorSettingState({
     index: index,
     hexColor: colorSetting.hexColor,
     setIndex,
-    setHexColor,
+    setColor,
   });
 }
 
@@ -273,27 +272,24 @@ function App() {
   const [colorSettings, setColorSettings] = useState<ColorSettingsType>([]);
   const [index, setIndex] = useState(indexOfNewColorSetting);
   const [sessionARN, setSessionARN] = useState("");
-  const [color, setColor] = useColor(defaultHexColor);
-  const setHexColor: SetHexColorType = (hc: string) => {
-    setColor(ColorService.convert("hex", hc));
-  };
+  const [color, setColor] = useState(defaultHexColor);
   useEffect(() => {
     initialize({
       setColorSettings,
       setIndex,
       setSessionARN,
-      setHexColor,
+      setColor,
     });
   }, []);
   const isIndexOfNewColorSetting = index === indexOfNewColorSetting;
   return (
     <>
       <h1>AWS management console colorize</h1>
-      <div className="card rcp-fields-floor">
-        <div id="session-arn-field" className="rcp-field">
+      <div className="card fields-floor">
+        <div id="session-arn-field" className="field">
           <select
             id="session-arn-index"
-            className="rcp-field-input"
+            className="field-input"
             value={index}
             onChange={async ({ target: { value } }) => {
               await onChange({
@@ -303,7 +299,7 @@ function App() {
                   setColorSettings,
                   setIndex,
                   setSessionARN,
-                  setHexColor,
+                  setColor,
                 },
               });
             }}
@@ -317,18 +313,30 @@ function App() {
           </select>
           {isIndexOfNewColorSetting && (
             <input
-              className="rcp-field-input"
+              className="field-input"
               placeholder="arn:aws:iam::012345678901:user/user_name"
               required={true}
               value={sessionARN}
               onChange={({ target: { value } }) => setSessionARN(value)}
             />
           )}
-          <label htmlFor="session-arn-index" className="rcp-field-label">
+          <label htmlFor="session-arn-index" className="field-label">
             Session ARN
           </label>
         </div>
-        <ColorPicker color={color} onChange={setColor} />
+        <div id="hex-color-field" className="field">
+          <HexColorPicker color={color} onChange={setColor} />
+          <HexColorInput
+            id="hex-color-input"
+            className="field-input"
+            color={color}
+            onChange={setColor}
+            prefixed={true}
+          />
+          <label htmlFor="hex-color-input" className="field-label">
+            HEX
+          </label>
+        </div>
         {isIndexOfNewColorSetting && (
           <button
             disabled={sessionARN === ""}
@@ -339,9 +347,9 @@ function App() {
                   setColorSettings,
                   setIndex,
                   setSessionARN,
-                  setHexColor,
+                  setColor,
                 },
-                hexColor: color.hex,
+                hexColor: color,
                 sessionARN,
               });
             }}
@@ -353,13 +361,13 @@ function App() {
           <>
             <button
               onClick={async () => {
-                await onUpdateButtonClick(color.hex, {
+                await onUpdateButtonClick(color, {
                   colorSettings,
                   getColorSettingsParams: {
                     setColorSettings,
                     setIndex,
                     setSessionARN,
-                    setHexColor,
+                    setColor,
                   },
                   index,
                 });
@@ -375,7 +383,7 @@ function App() {
                     setColorSettings,
                     setIndex,
                     setSessionARN,
-                    setHexColor,
+                    setColor,
                   },
                   index,
                 });
