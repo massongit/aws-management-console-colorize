@@ -313,6 +313,8 @@ function App() {
           </select>
           {isIndexOfNewColorSetting && (
             <input
+              id="new-session-arn"
+              name="new-session-arn"
               className="field-input"
               placeholder="arn:aws:iam::012345678901:user/user_name"
               required={true}
