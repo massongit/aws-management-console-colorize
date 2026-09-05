@@ -11,6 +11,54 @@
   grid-template-columns: initial;
 }
 
+.rcp-fields-floor {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.rcp-field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.rcp-field-input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 14px;
+  text-align: center;
+  color: var(--rcp-field-input-color);
+  background-color: transparent;
+  border: 2px solid var(--rcp-field-input-border-color);
+  border-radius: 5px;
+  outline: none;
+  padding: 5px 0;
+}
+
+.rcp-field-label {
+  font-size: 14px;
+  text-align: center;
+  color: var(--rcp-field-label-color);
+}
+
+.color-panel {
+  --rcp-field-input-color: #fff;
+  --rcp-field-input-border-color: #242424;
+  --rcp-field-label-color: #808080;
+
+  box-sizing: border-box;
+  gap: 10px;
+  padding: 16px;
+  background-color: #121212;
+  border-radius: 8px;
+}
+
+.color-panel .react-colorful {
+  width: 100%;
+  height: 300px;
+}
+
 .card > #session-arn-field {
   gap: 10px;
   width: initial;
