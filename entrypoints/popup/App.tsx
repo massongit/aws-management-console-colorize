@@ -115,9 +115,17 @@ async function sendMessageToContentScript(
   const filteredMatches = getMatches().filter((m) => {
     return matchURL(m, z.string().parse(tab.url));
   });
-  return 0 < filteredMatches.length
-    ? await browser.tabs.sendMessage(z.number().parse(tab.id), message)
-    : undefined;
+
+  if (filteredMatches.length === 0) {
+    return undefined;
+  }
+
+  try {
+    return await browser.tabs.sendMessage(z.number().parse(tab.id), message);
+  } catch {
+    // Content script isn't injected yet (e.g. tab predates the extension load).
+    return undefined;
+  }
 }
 
 async function getSessionARNFromContentScript(): Promise<
