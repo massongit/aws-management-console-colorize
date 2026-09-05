@@ -43,9 +43,10 @@
 }
 
 .color-panel {
-  --field-input-color: #ffffff;
+  --field-input-color: #fff;
   --field-input-border-color: #242424;
   --field-label-color: #808080;
+
   box-sizing: border-box;
   gap: 10px;
   padding: 16px;
