@@ -15,14 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          fetch-depth: 0
           persist-credentials: false
       - name: Set versions
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           PACKAGE_VERSION="v$(yq -r .version package.json)"
           echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> "$GITHUB_ENV"
 
-          if [ "$PACKAGE_VERSION" = "v$(git show "${{ github.event.before }}:package.json" | yq -r .version -)" ]
+          if gh release view "$PACKAGE_VERSION" >/dev/null 2>&1
           then
             echo "CHANGED=false" >> "$GITHUB_ENV"
           else
