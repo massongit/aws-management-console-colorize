@@ -17,7 +17,7 @@ export async function script(
       owner: ctx.repo.owner,
       repo: ctx.repo.repo,
       tag_name,
-      target_commitish: process.env.GITHUB_REF,
+      target_commitish: ctx.sha,
       generate_release_notes: true,
     };
   console.log("call repos.createRelease:", createReleaseParams);
