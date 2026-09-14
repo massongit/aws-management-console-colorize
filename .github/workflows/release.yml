@@ -26,7 +26,15 @@ jobs:
 
           PREVIOUS_VERSION="v$(git show "${{ github.event.before }}:package.json" | yq -r .version -)"
 
-          if [ "$PACKAGE_VERSION" != "$PREVIOUS_VERSION" ] && ! gh release view "$PACKAGE_VERSION" >/dev/null 2>&1
+          RELEASE_VIEW_OUTPUT="$(gh release view "$PACKAGE_VERSION" 2>&1)" && RELEASE_EXISTS=true || RELEASE_EXISTS=false
+
+          if [ "$RELEASE_EXISTS" = false ] && ! (echo "$RELEASE_VIEW_OUTPUT" | grep -qi "release not found")
+          then
+            echo "::error::Failed to check whether $PACKAGE_VERSION already has a release: $RELEASE_VIEW_OUTPUT"
+            exit 1
+          fi
+
+          if [ "$PACKAGE_VERSION" != "$PREVIOUS_VERSION" ] && [ "$RELEASE_EXISTS" = false ]
           then
             echo "CHANGED=true" >> "$GITHUB_ENV"
           else
