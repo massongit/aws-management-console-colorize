@@ -28,17 +28,6 @@ jobs:
           else
             echo "CHANGED=true" >> "$GITHUB_ENV"
           fi
-      - name: Create release
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
-        if: env.CHANGED == 'true'
-        with:
-          script: |
-            const {tsImport} = require('tsx/esm/api')
-            const {default: {script}} = await tsImport(
-              './scripts/release/release/create_release.ts',
-              process.env.GITHUB_WORKSPACE + '/'
-            )
-            await script(github, context)
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         if: env.CHANGED == 'true'
         with:
@@ -71,6 +60,17 @@ jobs:
           FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
           FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_JWT_ISSUER }}
           FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_JWT_SECRET }}
+      - name: Create release
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        if: env.CHANGED == 'true'
+        with:
+          script: |
+            const {tsImport} = require('tsx/esm/api')
+            const {default: {script}} = await tsImport(
+              './scripts/release/release/create_release.ts',
+              process.env.GITHUB_WORKSPACE + '/'
+            )
+            await script(github, context)
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
