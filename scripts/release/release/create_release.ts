@@ -9,7 +9,7 @@ export async function script(
   const tag_name = process.env.PACKAGE_VERSION;
 
   if (tag_name === undefined) {
-    throw new Error("PACKAGE_VERSION must set.");
+    throw new Error("PACKAGE_VERSION must be set.");
   }
 
   const createReleaseParams: RestEndpointMethodTypes["repos"]["createRelease"]["parameters"] =
