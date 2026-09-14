@@ -69,7 +69,7 @@ jobs:
             const {tsImport} = createRequire(
               `${process.env.GITHUB_WORKSPACE}/package.json`
             )('tsx/esm/api')
-            const {default: {script}} = await tsImport(
+            const {script} = await tsImport(
               './scripts/release/release/create_release.ts',
               process.env.GITHUB_WORKSPACE + '/'
             )
