@@ -78,11 +78,12 @@ jobs:
         with:
           script: |
             const {createRequire} = require('node:module')
+            const {pathToFileURL} = require('node:url')
             const {tsImport} = createRequire(
               `${process.env.GITHUB_WORKSPACE}/package.json`
             )('tsx/esm/api')
             const {script} = await tsImport(
               './scripts/release/release/create_release.ts',
-              process.env.GITHUB_WORKSPACE + '/'
+              pathToFileURL(`${process.env.GITHUB_WORKSPACE}/`).href
             )
             await script(github, context)
