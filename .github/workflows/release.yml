@@ -7,6 +7,7 @@ on:
     paths:
       - package.json
 permissions:
+  actions: read
   contents: write
 jobs:
   release:
@@ -54,6 +55,8 @@ jobs:
         run: |
           bun run zip:chrome
           bun run zip:firefox
+      - uses: softprops/turnstyle@3805450be63b8c80577dc253e8c17e9132036df4 # v3.3.3
+        if: env.CHANGED == 'true'
       - name: Submit to stores
         if: env.CHANGED == 'true'
         run: |
