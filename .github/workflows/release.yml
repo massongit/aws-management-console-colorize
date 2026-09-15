@@ -1,39 +1,62 @@
 ---
 name: release
 on:
-  release:
-    types:
-      - published
-permissions: read-all
+  push:
+    branches:
+      - main
+    paths:
+      - package.json
+permissions:
+  actions: read
+  contents: write
 jobs:
   release:
     runs-on: ubuntu-latest
     environment: release
     steps:
+      - uses: softprops/turnstyle@3805450be63b8c80577dc253e8c17e9132036df4 # v3.3.3
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - name: Verify version matches release tag
+      - name: Set versions
         env:
-          TAG_VERSION: ${{ github.event.release.tag_name }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          PACKAGE_VERSION="$(yq -r .version package.json)"
-          TAG_VERSION="${TAG_VERSION#v}"
-          if [ "$PACKAGE_VERSION" != "$TAG_VERSION" ]; then
-            echo "::error::package.json version ($PACKAGE_VERSION) does not match release tag ($TAG_VERSION)"
+          PACKAGE_VERSION="v$(yq -r .version package.json)"
+          echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> "$GITHUB_ENV"
+
+          RELEASE_VIEW_OUTPUT="$(gh release view "$PACKAGE_VERSION" 2>&1)" && RELEASE_EXISTS=true || RELEASE_EXISTS=false
+
+          if [ "$RELEASE_EXISTS" = false ] && ! (echo "$RELEASE_VIEW_OUTPUT" | grep -qi "release not found")
+          then
+            echo "::error::Failed to check whether $PACKAGE_VERSION already has a release: $RELEASE_VIEW_OUTPUT"
             exit 1
           fi
+
+          if [ "$RELEASE_EXISTS" = false ]
+          then
+            echo "CHANGED=true" >> "$GITHUB_ENV"
+          else
+            echo "CHANGED=false" >> "$GITHUB_ENV"
+          fi
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        if: env.CHANGED == 'true'
         with:
           bun-version-file: .bun-version
           no-cache: true
       - uses: flatt-security/setup-takumi-guard-npm@6d4182745c1e474c35a023573c2612c085be45a4 # v1.2.0
+        if: env.CHANGED == 'true'
       - run: bun install
+        if: env.CHANGED == 'true'
       - name: Build
+        if: env.CHANGED == 'true'
         run: |
           bun run zip:chrome
           bun run zip:firefox
       - name: Submit to stores
+        if: env.CHANGED == 'true'
         run: |
           bunx wxt submit \
                --chrome-zip dist/*-chrome.zip \
@@ -50,6 +73,18 @@ jobs:
           FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
           FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_JWT_ISSUER }}
           FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_JWT_SECRET }}
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
-  cancel-in-progress: true
+      - name: Create release
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        if: env.CHANGED == 'true'
+        with:
+          script: |
+            const {createRequire} = require('node:module')
+            const {pathToFileURL} = require('node:url')
+            const {tsImport} = createRequire(
+              `${process.env.GITHUB_WORKSPACE}/package.json`
+            )('tsx/esm/api')
+            const {script} = await tsImport(
+              './scripts/release/release/create_release.ts',
+              pathToFileURL(`${process.env.GITHUB_WORKSPACE}/`).href
+            )
+            await script(github, context)
