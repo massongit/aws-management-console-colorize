@@ -20,28 +20,24 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - name: Set versions
+      - name: Determine version and release status
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           PACKAGE_VERSION="v$(yq -r .version package.json)"
           echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> "$GITHUB_ENV"
 
-          RELEASE_VIEW_OUTPUT="$(gh release view "$PACKAGE_VERSION" 2>&1)" && RELEASE_EXISTS=true || RELEASE_EXISTS=false
+          RELEASE_VIEW_OUTPUT="$(gh release view "$PACKAGE_VERSION" 2>&1)" && CHANGED=false || CHANGED=true
           echo "RELEASE_VIEW_OUTPUT=$RELEASE_VIEW_OUTPUT" >> "$GITHUB_ENV"
-          echo "RELEASE_EXISTS=$RELEASE_EXISTS" >> "$GITHUB_ENV"
-      - name: Mark version as changed if release is confirmed absent
-        if: env.RELEASE_EXISTS == 'false'
+          echo "CHANGED=$CHANGED" >> "$GITHUB_ENV"
+      - name: Verify the release is genuinely absent
+        if: env.CHANGED == 'true'
         run: |
           if ! (echo "$RELEASE_VIEW_OUTPUT" | grep -qi "release not found")
           then
             echo "::error::Failed to check whether $PACKAGE_VERSION already has a release: $RELEASE_VIEW_OUTPUT"
             exit 1
           fi
-
-          echo "CHANGED=true" >> "$GITHUB_ENV"
-      - if: env.RELEASE_EXISTS == 'true'
-        run: echo "CHANGED=false" >> "$GITHUB_ENV"
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         if: env.CHANGED == 'true'
         with:
