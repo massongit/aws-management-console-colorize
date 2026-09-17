@@ -5,6 +5,9 @@ on:
     branches:
       - main
     paths:
+      - .github/workflows/release.yml
+      - scripts/release/release/create_release.ts
+      - .bun-version
       - package.json
 permissions:
   actions: read
@@ -28,7 +31,11 @@ jobs:
           echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> "$GITHUB_ENV"
 
           RELEASE_VIEW_OUTPUT="$(gh release view "$PACKAGE_VERSION" 2>&1)" && CHANGED=false || CHANGED=true
-          echo "RELEASE_VIEW_OUTPUT=$RELEASE_VIEW_OUTPUT" >> "$GITHUB_ENV"
+          {
+            echo "RELEASE_VIEW_OUTPUT<<RELEASE_VIEW_OUTPUT_EOF"
+            echo "$RELEASE_VIEW_OUTPUT"
+            echo "RELEASE_VIEW_OUTPUT_EOF"
+          } >> "$GITHUB_ENV"
           echo "CHANGED=$CHANGED" >> "$GITHUB_ENV"
       - name: Verify the release is genuinely absent
         if: env.CHANGED == 'true'
