@@ -41,7 +41,7 @@
     "@wxt-dev/module-react": "1.2.2",
     "@wxt-dev/storage": "1.2.9",
     "globals": "17.12.0",
-    "prettier": "3.9.6",
+    "prettier": "3.9.8",
     "textlint": "15.8.0",
     "textlint-filter-rule-comments": "1.3.0",
     "textlint-rule-abbr-within-parentheses": "1.0.2",
