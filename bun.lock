@@ -13,7 +13,7 @@
       "devDependencies": {
         "@actions/github": "9.1.1",
         "@octokit/plugin-rest-endpoint-methods": "18.0.0",
-        "@playwright/test": "1.63.0",
+        "@playwright/test": "1.64.0",
         "@proofdict/textlint-rule-proofdict": "3.1.2",
         "@textlint-ja/textlint-rule-no-insert-dropping-sa": "2.0.1",
         "@types/chrome": "0.3.4",
@@ -180,7 +180,7 @@
 
     "@oxc-project/types": ["@oxc-project/types@0.153.0", "https://npm.flatt.tech/@oxc-project/types/-/types-0.153.0.tgz", {}, "sha512-jSNrRIyvPVLL5E1z/tS5zLAprosGz/FuI1PWwEOz59j3E4TTTzSpqKb/RDGqJhhW0QHYISGXxq582wGx6T11Tw=="],
 
-    "@playwright/test": ["@playwright/test@1.63.0", "https://npm.flatt.tech/@playwright/test/-/test-1.63.0.tgz", { "dependencies": { "playwright": "1.63.0" }, "bin": { "playwright": "cli.js" } }, "sha512-oxMK4vllB9RK5NQ2l1pq1IfOf2AvnEuj/vYGDj0H2nMtmtZpKtCwt/l00GEO6xjGfpBNAvjovvYdCm50dRQkpQ=="],
+    "@playwright/test": ["@playwright/test@1.64.0", "https://npm.flatt.tech/@playwright/test/-/test-1.64.0.tgz", { "dependencies": { "playwright": "1.64.0" }, "bin": { "playwright": "cli.js" } }, "sha512-oTN9FNYuN6bqQMwiho6jJKLCG2/QOYCixGXuCjRmzOq23eODeukuY2XiAVoVpAECbuezMt1MHQjAiQxK8F+Y+g=="],
 
     "@proofdict/tester": ["@proofdict/tester@3.1.0", "https://npm.flatt.tech/@proofdict/tester/-/tester-3.1.0.tgz", { "dependencies": { "@proofdict/types": "^3.1.0", "prh": "5.4.4" } }, "sha512-qzeYjOfNwpt4WF6rN9YHLUsGF3OEGD+Zt3ZfJ1KDw2tKH8e2lr9bVsEIbq7v3KBgoGo43zgx3bNsPM/CuE027w=="],
 
@@ -954,9 +954,9 @@
 
     "pkg-types": ["pkg-types@2.3.3", "https://npm.flatt.tech/pkg-types/-/pkg-types-2.3.3.tgz", { "dependencies": { "confbox": "^0.3.1", "exsolve": "^1.1.1", "pathe": "^2.0.3" } }, "sha512-j/lCFdcppV0JxWpCEITdbDltBxPP6cHT+yNJ6Go2OgoSA9518X847X9z0p6LtA4Nc16+eQzCZjRrWanTGvHJ5w=="],
 
-    "playwright": ["playwright@1.63.0", "https://npm.flatt.tech/playwright/-/playwright-1.63.0.tgz", { "dependencies": { "playwright-core": "1.63.0" }, "bin": { "playwright": "cli.js" } }, "sha512-+7ziBLidS4NaNCdt57SUDT+wYmmd5fmiQejUic/kb+YsYSCPyOOE9sebzMjNmQrsnNpDJqd4WHvV/8lfKfUDUg=="],
+    "playwright": ["playwright@1.64.0", "https://npm.flatt.tech/playwright/-/playwright-1.64.0.tgz", { "dependencies": { "playwright-core": "1.64.0" }, "bin": { "playwright": "cli.js" } }, "sha512-kVzTnYFYEyQ9RGzBjNCd2+yEqWmVbxl3AHPynv3qQ6JTjv4a+kwRcnqQwIpuP3NnrnIrE/Q6wWAIAvMfIE2/Yg=="],
 
-    "playwright-core": ["playwright-core@1.63.0", "https://npm.flatt.tech/playwright-core/-/playwright-core-1.63.0.tgz", { "bin": { "playwright-core": "cli.js" } }, "sha512-rYCsBF/M5HjUch52bbtVONEFjv6Xu8sm8h72dNlR5bzIE1fvC/bxgspzkjSfU+MweEMmPM8KJebG6nnyxo5mCg=="],
+    "playwright-core": ["playwright-core@1.64.0", "https://npm.flatt.tech/playwright-core/-/playwright-core-1.64.0.tgz", { "bin": { "playwright-core": "cli.js" } }, "sha512-T9r+MZkTECl2+oUcZ26YgZzTrYidTsIhYYkJix+6iDOymOb1FB2RLLSOxRGnZGv5DStt+aduIVbt+E8WygXYpg=="],
 
     "pluralize": ["pluralize@2.0.0", "https://npm.flatt.tech/pluralize/-/pluralize-2.0.0.tgz", {}, "sha512-TqNZzQCD4S42De9IfnnBvILN7HAW7riLqsCyp8lgjXeysyPlX5HhqKAcJHHHb9XskE4/a+7VGC9zzx8Ls0jOAw=="],
 
