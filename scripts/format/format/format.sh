@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
+# Generate files for each AI agent from the rules in .rulesync/
+bunx rulesync generate
+
 current_diff=""
 
 for _ in $(seq 10); do
