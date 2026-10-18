@@ -21,3 +21,34 @@ This is because AWS console uses dynamic rendering.
 ## Testing Notes
 
 End-to-end tests (`tests/e2e/`) use Playwright with chromium profile. The dev build allows `file://` protocol for loading local HTML fixtures.
+
+## Security
+
+This extension runs a content script inside AWS Management Console pages, where users hold privileged sessions.
+CI jobs here also run with write-capable tokens.
+When implementing or reviewing, check that the change withstands malicious input and operations.
+Working correctly is not enough.
+
+- Treat page DOM content (including `<meta name="awsc-session-data">`), runtime messages, and storage data as untrusted.
+  Synced storage can be written from any of the user's devices.
+- Validate every storage read and message payload with Zod before use, and fail safely on invalid data.
+  Only accept values that match the expected format (e.g. colors as hex strings) before applying them to styles.
+- Never insert untrusted strings as HTML (`innerHTML`, `insertAdjacentHTML`, `dangerouslySetInnerHTML`).
+  Build DOM with `textContent` and element APIs instead.
+- Never use `eval`, `new Function`, or remotely loaded code.
+- Keep manifest `permissions` and content script `matches` to the minimum.
+  `file://` matches must stay dev-only.
+- Do not leak session ARNs, account IDs, or other console data to logs, external services, or error messages.
+- In GitHub Actions workflows and scripts, keep values from outside inside their string or code:
+  - Do not embed `${{ }}` values directly in `run:`; pass them via `env:`.
+  - In shell, always double-quote variables, and never use `eval` or build commands from strings.
+  - In jobs with write permissions, keep `persist-credentials: false` and least-privilege `permissions`.
+    Do not allow dependency lifecycle scripts to run there (do not add `trustedDependencies`).
+- Pin new external Actions to full commit SHAs.
+  Avoid dependency versions that were published only very recently.
+- When fixing a security issue, always write tests that confirm the issue no longer reproduces.
+  - Use the inputs an attacker would use, and confirm the fixed code skips or rejects them safely.
+    For example, crafted session data in the page or invalid color settings in storage.
+  - Confirm the tests fail against the code before the fix, so they actually detect the issue.
+- If a vulnerability is found during review, do not write the details in a public issue or PR.
+  Report it privately first.
