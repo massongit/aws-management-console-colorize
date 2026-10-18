@@ -8,7 +8,9 @@
     "**/entrypoints/options/index.html",
     "**/entrypoints/popup/index.html",
     "**/tests/e2e/html/console*.html",
-    "**/tests/e2e/*.spec.ts"
+    "**/tests/e2e/*.spec.ts",
+    "**/CLAUDE.md",
+    "**/.github/copilot-instructions.md"
   ],
   "absolute": true
 }

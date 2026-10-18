@@ -1,0 +1,7 @@
+{
+  // Generate files for each AI agent from the rules in .rulesync/
+  "targets": ["claudecode", "copilot"],
+  "features": ["rules"],
+  "baseDirs": ["."],
+  "delete": true,
+}
