@@ -1,10 +1,37 @@
+import { simpleGit } from "simple-git";
 import type { ConfigEnv, UserManifest } from "wxt";
 import { defineConfig } from "wxt";
+
+// Keep files that are not tracked by git (local notes, screenshots, etc.)
+// out of the sources zip submitted to Firefox Add-ons, where it is published.
+async function getUntrackedSources(): Promise<string[]> {
+  let paths: string[];
+
+  try {
+    // List untracked and ignored files, collapsing whole directories
+    const { not_added, ignored = [] } = await simpleGit().status([
+      "--ignored=matching",
+      "--untracked-files=normal",
+    ]);
+    paths = not_added.concat(ignored);
+  } catch {
+    return [];
+  }
+
+  return paths.map((p: string): string => {
+    // Treat each path literally rather than as a glob
+    const escaped = p.replace(/[*?[\]{}()!@+\\]/g, "\\$&");
+    return escaped.endsWith("/") ? `${escaped}**` : escaped;
+  });
+}
 
 function manifest(env: ConfigEnv): UserManifest {
   return {
     name: "AWS management console colorize",
-    permissions: ["storage", "tabs"],
+
+    // activeTab is enough to read the URL of the tab the popup was opened on
+    permissions: ["storage", "activeTab"],
+
     // Keep a consistent extension ID when we test a Chrome extension
     // https://developer.chrome.com/docs/extensions/reference/manifest/key#keep-consistent-id
     key:
@@ -32,4 +59,7 @@ export default defineConfig({
   modules: ["@wxt-dev/module-react"],
   outDir: "dist",
   manifest,
+  zip: {
+    excludeSources: await getUntrackedSources(),
+  },
 });

@@ -1,11 +1,10 @@
 import { browser, defineContentScript } from "#imports";
 import { z } from "zod";
-import {
-  getColorSettingsFromStorage,
-  colorSettingZodType,
-} from "@/modules/color_settings.ts";
+import type { ColorSettingType } from "@/modules/color_settings.ts";
+import { getColorSettingsFromStorage } from "@/modules/color_settings.ts";
 import {
   signinMatchPattern,
+  sessionsSelectorMatchPattern,
   getMatches,
   MessageType,
   matchURL,
@@ -15,7 +14,7 @@ type GetHTMLElementType = () => HTMLElement | null;
 
 function changeColorElement(
   colorElement: HTMLDivElement,
-  colorSetting: z.TypeOf<typeof colorSettingZodType>,
+  colorSetting: ColorSettingType,
   awsUIRestorePointerEvents: HTMLElement,
 ) {
   awsUIRestorePointerEvents.style.display = "flex";
@@ -237,9 +236,7 @@ async function main() {
     isSessionsSelectorTestHTMLURL
   ) {
     if (
-      !document.documentURI.includes(
-        ".signin.aws.amazon.com/sessions/selector",
-      ) &&
+      !matchURL(sessionsSelectorMatchPattern, document.documentURI) &&
       !isSessionsSelectorTestHTMLURL
     ) {
       return;

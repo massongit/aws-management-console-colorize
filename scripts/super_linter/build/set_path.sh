@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-bun install
+# This job runs with write-capable tokens, so do not run dependency lifecycle scripts
+bun install --ignore-scripts
+bunx wxt prepare
+
 tag_name="$(yq '.jobs.build.steps[-1].uses' .github/workflows/super-linter.yml | sed -e 's;/slim@.*;:slim;g')"
 tag_version="$(yq '.jobs.build.steps[-1].uses | line_comment' .github/workflows/super-linter.yml)"
 PATH="$(docker run --rm --entrypoint '' "ghcr.io/${tag_name}-${tag_version}" /bin/sh -c 'echo $PATH')"

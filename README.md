@@ -23,12 +23,14 @@ These are inspired by [gcp-console-colorize](https://github.com/yfuruyama/gcp-co
 
 Those extensions save the colors of the AWS pages per session ARN to storage.
 
-### `tabs` justification
+### `activeTab` justification
 
-The popup for those extensions sends messages to the content script running on the active tab to:
+The popup for those extensions reads the URL of the active tab only when you open the popup.
+It uses the URL to check whether the tab is an AWS page.
+If so, the popup sends messages to the content script running on that tab to:
 
-- To get the session ARN used by the AWS pages.
-- If you change the settings in the popup, the settings will be reflected in the AWS pages.
+- Get the session ARN used by the AWS page.
+- Reflect the settings changed in the popup on the AWS page.
 
 ### Host permission justification
 
