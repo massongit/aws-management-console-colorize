@@ -1,19 +1,18 @@
 import React from "react";
 import type { Dispatch, SetStateAction } from "react";
 import type { ZodSafeParseResult } from "zod";
+import type { ColorSettingsType } from "@/modules/color_settings.ts";
 import { browser, storage, useEffect, useState } from "#imports";
 import { ColorPicker, ColorService, useColor } from "react-color-palette";
 import { z } from "zod";
 import {
   colorSettingsStorageItemKey,
-  colorSettingsZodType,
   getColorSettingsFromStorage,
 } from "@/modules/color_settings.ts";
 import { getMatches, MessageType, matchURL } from "@/modules/lib.ts";
 import "react-color-palette/css";
 import "./App.css";
 
-type ColorSettingsType = z.TypeOf<typeof colorSettingsZodType>;
 type SetHexColorType = (hc: string) => void;
 type SetIndexType = Dispatch<SetStateAction<number>>;
 type GetColorSettingsParamsType = {
@@ -113,8 +112,15 @@ async function sendMessageToContentScript(
     throw new Error("Can't get a tab");
   }
 
+  // tab.url is undefined unless activeTab has been granted for the tab
+  const { success, data: url } = z.string().safeParse(tab.url);
+
+  if (!success) {
+    return undefined;
+  }
+
   const filteredMatches = getMatches().filter((m) => {
-    return matchURL(m, z.string().parse(tab.url));
+    return matchURL(m, url);
   });
   return 0 < filteredMatches.length
     ? await browser.tabs.sendMessage(z.number().parse(tab.id), message)

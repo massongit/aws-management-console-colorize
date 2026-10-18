@@ -53,8 +53,12 @@ jobs:
           no-cache: true
       - uses: flatt-security/setup-takumi-guard-npm@14f07d0cbc739b42a1b7c70a04c2b84cd1318ddd # v1.4.0
         if: env.CHANGED == 'true'
-      - run: bun install
+      # This job has store credentials, so do not run dependency lifecycle scripts
+      - name: bun install
         if: env.CHANGED == 'true'
+        run: |
+          bun install --ignore-scripts
+          bunx wxt prepare
       - name: Build
         if: env.CHANGED == 'true'
         run: |
