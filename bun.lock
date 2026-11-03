@@ -16,7 +16,7 @@
         "@playwright/test": "1.64.1",
         "@proofdict/textlint-rule-proofdict": "3.1.2",
         "@textlint-ja/textlint-rule-no-insert-dropping-sa": "2.0.1",
-        "@types/chrome": "0.3.6",
+        "@types/chrome": "0.3.7",
         "@types/node": "26.6.5",
         "@types/react": "19.3.0",
         "@types/react-dom": "19.3.0",
@@ -296,7 +296,7 @@
 
     "@topcli/prompts": ["@topcli/prompts@4.0.0", "https://npm.flatt.tech/@topcli/prompts/-/prompts-4.0.0.tgz", {}, "sha512-kkKYPb4k/6kRdnESt77B5vJrrYnYHIYczwv0P1c+tfN/IWEx3KZeKEHoUq7sImIyBEXWdA2uakIroD9pmRJziQ=="],
 
-    "@types/chrome": ["@types/chrome@0.3.6", "https://npm.flatt.tech/@types/chrome/-/chrome-0.3.6.tgz", { "dependencies": { "@types/har-format": "*" } }, "sha512-NXCrCBefCHCKMVbkaxfBQqyP766Wg85S2FQhixCCxq7AtjJwoEaja2y5NSqCzpihIi9mPqhaF5RuybTnrdYD2Q=="],
+    "@types/chrome": ["@types/chrome@0.3.7", "https://npm.flatt.tech/@types/chrome/-/chrome-0.3.7.tgz", { "dependencies": { "@types/har-format": "*" } }, "sha512-jWZgbHqWbTL1a5+PoyN0OJutNyejWgyZ5MdcvKo6iJE1TNRtXR3FxsC4WzNl52yZWPidfWC8NV/VUNZf+OFKcA=="],
 
     "@types/debug": ["@types/debug@0.0.30", "https://npm.flatt.tech/@types/debug/-/debug-0.0.30.tgz", {}, "sha512-orGL5LXERPYsLov6CWs3Fh6203+dXzJkR7OnddIr2514Hsecwc8xRpzCapshBbKFImCsvS/mk6+FWiN5LyZJAQ=="],
 
