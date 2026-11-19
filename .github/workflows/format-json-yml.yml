@@ -25,6 +25,12 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
+          # dist/ holds build output (minified manifest.json) that format.yml regenerates,
+          # so exclude it from the working tree to keep it from being reformatted
+          sparse-checkout: |
+            /*
+            !/dist/
+          sparse-checkout-cone-mode: false
       - if: github.event_name != 'pull_request' || github.event.action != 'closed'
         uses: flatt-security/setup-takumi-guard-npm@14f07d0cbc739b42a1b7c70a04c2b84cd1318ddd # v1.4.0
       # Fix PRs are operated on only for push and pull_request from non-fork repositories. Other events only verify the diff, so no write token is issued
