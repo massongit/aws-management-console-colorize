@@ -19,12 +19,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: ci
     steps:
+      # jscpd:ignore-start
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
+      # jscpd:ignore-end
       - name: Install actions-lock
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
         run: gh extension install github/gh-actions-lock --pin "${GH_ACTIONS_LOCK_VERSION}"
