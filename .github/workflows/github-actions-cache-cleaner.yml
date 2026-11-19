@@ -7,12 +7,15 @@ on:
   schedule:
     - cron: "0 21 * * *" # 06:00 JST
   workflow_dispatch:
-permissions: read-all
+permissions:
+  contents: read
+  actions: write
 jobs:
   github-actions-cache-cleaner:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - uses: dev-hato/github-actions-cache-cleaner@88d68a261462dd5f6f6632adec3fa5cf5466c865 # v0.0.97

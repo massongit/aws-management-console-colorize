@@ -15,13 +15,14 @@ permissions:
   contents: write
 jobs:
   release:
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     environment: release
     steps:
       - uses: softprops/turnstyle@ec9869921df7799d5afea364f4026770f3760342 # v3.3.5
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Determine version and release status
