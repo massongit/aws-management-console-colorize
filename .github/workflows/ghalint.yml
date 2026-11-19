@@ -1,0 +1,44 @@
+---
+name: ghalint
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ghalint:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: aquaproj/aqua-installer@611554c6f0137ba41c8dd15aca8bee82504ea461 # v4.1.1
+        with:
+          aqua_version: v2.66.1
+      - name: Lint workflows and action definitions
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          result=0
+          ghalint --log-color never run || result=1
+
+          action_files_path="${RUNNER_TEMP}/ghalint-action-files"
+          git ls-files -z -- 'action.yml' 'action.yaml' '**/action.yml' '**/action.yaml' > "$action_files_path"
+          action_files=()
+          while IFS= read -r -d '' action_file; do
+            action_files+=("$action_file")
+          done < "$action_files_path"
+          printf 'Action definitions: %d\n' "${#action_files[@]}"
+          if (( ${#action_files[@]} > 0 )); then
+            ghalint --log-color never run-action -- "${action_files[@]}" || result=1
+          fi
+
+          exit "$result"
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
