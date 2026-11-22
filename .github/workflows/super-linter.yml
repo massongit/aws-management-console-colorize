@@ -69,6 +69,9 @@ jobs:
           VALIDATE_CHECKOV: false
           VALIDATE_BIOME_FORMAT: false
           VALIDATE_BIOME_LINT: false
+          # go.modはghalintをtoolディレクティブで管理するためだけにあり、本リポジトリ自身のGoのコードはない
+          # Super-Linterに同梱のgolangci-lintはgo.modのGoのバージョンに追従できず、node_modules内のGoのコードの型検査に失敗するため無効にする
+          VALIDATE_GO_MODULES: false
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
