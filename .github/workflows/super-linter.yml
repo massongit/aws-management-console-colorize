@@ -69,8 +69,8 @@ jobs:
           VALIDATE_CHECKOV: false
           VALIDATE_BIOME_FORMAT: false
           VALIDATE_BIOME_LINT: false
-          # go.modはghalintをtoolディレクティブで管理するためだけにあり、本リポジトリ自身のGoのコードはない
-          # Super-Linterに同梱のgolangci-lintはgo.modのGoのバージョンに追従できず、node_modules内のGoのコードの型検査に失敗するため無効にする
+          # go.mod exists only to manage ghalint via the tool directive; this repository has no Go code of its own
+          # Disabled because golangci-lint bundled with Super-Linter cannot keep up with the Go version in go.mod and fails to type-check Go code in node_modules
           VALIDATE_GO_MODULES: false
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
