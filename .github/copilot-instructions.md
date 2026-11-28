@@ -22,6 +22,12 @@ This is because AWS console uses dynamic rendering.
 
 End-to-end tests (`tests/e2e/`) use Playwright with chromium profile. The dev build allows `file://` protocol for loading local HTML fixtures.
 
+## Commits and Pull Requests
+
+Do not include links to AI agent session transcripts in commit messages or pull request descriptions.
+For example, omit `Claude-Session:` URL lines even if the agent's own instructions ask for them.
+This repository is public, and such links must not circulate in its history.
+
 ## Security
 
 This extension runs a content script inside AWS Management Console pages.
